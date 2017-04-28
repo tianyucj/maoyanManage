@@ -7,7 +7,7 @@ export default class CinemaMatch extends React.Component{
   }
   render(){
     return (
-      <h1>院线匹配</h1>
+      <h1>院线匹配fhjsakhfhakhfdja</h1>
     )
   }
 }
