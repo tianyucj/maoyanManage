@@ -7,9 +7,13 @@ export default class FilmManage extends React.Component{
   }
   render(){
     return (
+<<<<<<< HEAD
 
       <h1>电影管理lc_test</h1>
 
+=======
+      <h1>电影管理lc_test898989898</h1>
+>>>>>>> lc
     )
   }
 }
