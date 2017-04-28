@@ -10,9 +10,9 @@ export default class Manage extends React.Component{
   render(){
     return (
       <Layout>
-        <Sider style={{margin:"24px 16px 24px"}} breakpoint="lg" collapsedWidth="0"
+        <Sider style={{margin:"24px 16px 24px",backgroundColor:"#fff"}} breakpoint="lg" collapsedWidth="0"
           onCollapse={(collapsed, type) => { console.log(collapsed, type); }} >
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+          <Menu theme="white" mode="inline" defaultSelectedKeys={['5']}>
             <Menu.Item key="userManage">
               <Icon type="user" />
               <span className="nav-text"><Link to="/user">用户管理</Link></span>
