@@ -10,7 +10,10 @@ import WellReceived from "../manage/wellReceived/WellReceived";
 import {Route,Router,IndexRoute,hashHistory} from "react-router";
 import Index from "../index/Index";
 
-ReactDOM.render(<Router history={hashHistory}>
+import store from "../tool/store";
+import {Provider} from "react-redux";
+
+ReactDOM.render(<Provider store={store}><Router history={hashHistory}>
     <Route path="/" component={Index}>
       <IndexRoute component={Login}></IndexRoute>
       <Route path="/login" component={Login}></Route>
@@ -22,4 +25,4 @@ ReactDOM.render(<Router history={hashHistory}>
         <Route path="/wellReceived" component={WellReceived}></Route>
       </Route>
     </Route>
-  </Router>,document.getElementById("manage"));
+  </Router></Provider>,document.getElementById("manage"));
