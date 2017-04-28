@@ -1,5 +1,5 @@
 import React from "react";
-import {ajax} from "../js/tools";
+import {ajax} from "../tool/tools";
 import { Form, Input, Icon,Tooltip, Cascader, Checkbox , Button , Select, Row, Col , Card ,notification} from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;

@@ -1,5 +1,6 @@
 import React from "react";
 import {Layout} from "antd";
+import {Link} from "react-router";
 const {Header,Footer,Content,Sider}=Layout;
 
 export default class Index extends React.Component{
@@ -10,7 +11,8 @@ export default class Index extends React.Component{
     return <div>
       <Layout>
         <Header style={{background:"linear-gradient(rgb(55, 192, 255), rgb(0, 151, 221)) 0% 0% / 100%"}}>
-          <h1 style={{float:"left"}}>猫眼电影后台管理系统</h1><span style={{float:"right",cursor:"pointer"}}>登录</span>
+          <h1 style={{float:"left"}}>猫眼电影后台管理系统</h1>
+          <span style={{float:"right",cursor:"pointer"}}><Link to="/login">登录</Link></span>
         </Header>
         <Content>{this.props.children}</Content>
         <Footer style={{background:"linear-gradient(rgb(55, 192, 255), rgb(0, 151, 221)) 0% 0% / 100%",textAlign:"center",color:"#fff"}}>
