@@ -1,5 +1,5 @@
 import React from "react";
-import {ajax} from "../js/tools";
+import {ajax} from "../tool/tools";
 import { Form, Input, Icon,Tooltip, Cascader, Checkbox , Button , Select, Row, Col , Card ,notification} from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -13,8 +13,8 @@ class Login extends React.Component{
 	      	delete values.remember;
 	      	ajax({
 		  		type:"poet",
-		  		url:"/stuMsg/find",
-		  		data:{username:values.username,pwd:values.pwd,findType:"exact"},
+		  		url:"/userLogData/find",
+		  		data:{acc:values.username,pwd:values.pwd,findType:"exact"},
 		  		success:function(data){
 		  			if(data.length > 0){
 			  			notification['success']({
