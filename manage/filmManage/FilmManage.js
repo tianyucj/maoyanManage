@@ -7,7 +7,9 @@ export default class FilmManage extends React.Component{
   }
   render(){
     return (
-      <h1>电影管理test_lc</h1>
+
+      <h1>电影管理lc_test</h1>
+
     )
   }
 }
