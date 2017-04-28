@@ -12,9 +12,9 @@ export default class Index extends React.Component{
       <Layout>
         <Header style={{background:"linear-gradient(rgb(55, 192, 255), rgb(0, 151, 221)) 0% 0% / 100%"}}>
           <h1 style={{float:"left"}}>猫眼电影后台管理系统</h1>
-          <span style={{float:"right",cursor:"pointer"}}><Link to="/login">登录</Link></span>
+          <span style={{float:"right",cursor:"pointer"}}><Link style={{color:"#fff"}} to="/login">登录</Link></span>
         </Header>
-        <Content>{this.props.children}</Content>
+        <Content  style={{height:590}}>{this.props.children}</Content>
         <Footer style={{background:"linear-gradient(rgb(55, 192, 255), rgb(0, 151, 221)) 0% 0% / 100%",textAlign:"center",color:"#fff"}}>
           <h2>项目组成员：方兴 邓伟 李顺 梁超 田钰</h2>
         </Footer>
