@@ -76,13 +76,30 @@ const cinemaMatchReducer = function(state = cinemaMatch,action){
 	}
 	return state
 }
+//订单管理
+const orderManage = {
+	orderManage:{},
+	data:{}
+}
+const orderManageReducer = function(state = orderManage,action){
+	if(action.type == "SHOW_ORDERMANAGE"){
+		var newState = Object.assign({},state,{orderManage:action.orderManage});
+		return newState
+	}
+	if(action.type == "SHOW_ALL_ORDERMANAGE"){
+		var newState = Object.assign({},state,{data:action.data});
+		return newState
+	}
+	return state
+}
 //将所有的reducer进行组合
 const reducers = combineReducers({
 	operateReducer:operateReducer,
 	userReducer:userReducer,
 	filmReducer:filmReducer,
 	cinemaReducer:cinemaReducer,
-	cinemaMatchReducer:cinemaMatchReducer
+	cinemaMatchReducer:cinemaMatchReducer,
+	orderManageReducer:orderManageReducer
 });
 
 export default createStore(reducers);

@@ -36,7 +36,7 @@ module.exports = {
     host:'0.0.0.0',
     proxy:[
       {
-        context:['/filmData/**','/hotFilmData/**','/userLogData/**','/theChainData/**','/voidHall/**','/showTheChainData/**'],
+        context:['/filmData/**','/hotFilmData/**','/userLogData/**','/theChainData/**','/voidHall/**','/showTheChainData/**','/orderData/**','/maoyanUsers/**','/getSession','/logout'],
         target:'http://127.0.0.1:3000',
         secure:false
       }

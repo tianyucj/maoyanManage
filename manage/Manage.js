@@ -33,6 +33,10 @@ export default class Manage extends React.Component{
               <Icon type="video-camera" />
               <span className="nav-text"><Link to="/wellReceived">热映电影管理</Link></span>
             </Menu.Item>
+            <Menu.Item key="orderManage">
+              <Icon type="video-camera" />
+              <span className="nav-text"><Link to="/orderManage">订单管理</Link></span>
+            </Menu.Item>
           </Menu>
         </Sider>
         <Content style={{ margin: '24px 16px 24px' }}>

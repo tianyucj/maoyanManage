@@ -4,12 +4,11 @@ import {ajax} from "../../tool/tools";
 import store from "../../tool/store";
 import {connect} from "react-redux";
 
-import AddUser from "./AddUser";
-import TableUser from "./TableUser";
-import UpdateUser from "./UpdateUser";
-import SearchUser from "./SearchUser";
+import MaoyanUser from "./MaoyanUser";
+import TableOrder from "./TableOrder";
+import SearchOrder from "./SearchOrder";
 
-class UserMessage extends React.Component{
+class OrderManage extends React.Component{
 	constructor(props){
 		super(props);
         this.state = {
@@ -26,33 +25,33 @@ class UserMessage extends React.Component{
         };
         if(searchData != undefined){
             this.state.forPage = searchData;
-           if(searchData.name != undefined){
+           if(searchData.filmName != undefined){
                 obj={
                     page:page,
                     rows:pageSize,
-                    name:searchData.name
+                    filmName:searchData.filmName
                 }
-            }else if(searchData.division != undefined){
+            }else if(searchData.address != undefined){
                 obj={
                     page:page,
                     rows:pageSize,
-                    division:searchData.division
+                    address:searchData.address
                 }
-            }else if(searchData.phone != undefined){
+            }else if(searchData.ticketPrice != undefined){
                 obj={
                     page:page,
                     rows:pageSize,
-                    phone:searchData.phone
+                    ticketPrice:searchData.ticketPrice
                 }
             }
         }
         ajax({
             type:"get",
-            url:"/userLogData/find",
+            url:"/orderData/find",
             data:obj,
             success:function(data){
                 store.dispatch({
-                    type:"SHOW_ALL_USER",
+                    type:"SHOW_ALL_ORDERMANAGE",
                     data:data
                 });
             }.bind(this)
@@ -63,14 +62,13 @@ class UserMessage extends React.Component{
 			<Card title="电影管理">
 			<Row>
 			<Col span={2}>
-			<AddUser show={this.show.bind(this)}></AddUser>
+			<MaoyanUser></MaoyanUser>
 			</Col>
             <Col span={16}>
-            <SearchUser show={this.show.bind(this)}></SearchUser>
+            <SearchOrder show={this.show.bind(this)}></SearchOrder>
             </Col>
 			</Row>
-            <TableUser forPage={this.state.forPage} show={this.show.bind(this)}></TableUser>
-            <UpdateUser show={this.show.bind(this)}></UpdateUser>
+            <TableOrder forPage={this.state.forPage} show={this.show.bind(this)}></TableOrder>
 			</Card>
 			</div>
 			)
@@ -78,7 +76,7 @@ class UserMessage extends React.Component{
 }
 const mapStateToProps = function(store){
     return {
-        userReducer:store.userReducer
+        orderManageReducer:store.orderManageReducer
     }
 }
-export default connect(mapStateToProps)(UserMessage);
+export default connect(mapStateToProps)(OrderManage);
