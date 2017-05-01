@@ -9,6 +9,13 @@ class TableElement extends React.Component{
     constructor(props){
       super(props);
     }
+    showUpdataModel(){
+        store.dispatch({
+              type:"SHOW_UPDATE_MODAL",
+              updateVisible:true
+          });
+        console.log(1);
+    }
     del(id){
 
     confirm({
@@ -52,7 +59,7 @@ class TableElement extends React.Component{
       key:"action",
       render:(text,record) => (
          <span>
-          <Button type="primary">修改</Button>
+          <Button type="primary" onClick={this.showUpdataModel.bind(this)}>修改</Button>
             <Button style={{marginLeft:"20px",backgroundColor:"white" ,color:"black"}} type="primary" onClick={()=>this.del(text._id)}>
                 删除
             </Button>
@@ -84,6 +91,7 @@ class TableElement extends React.Component{
 const mapStateToProps = function(store){
     return {
         cinemaReducer:store.cinemaReducer,
+        operateReducer:store.operateReducer
     }
 }
 export default connect(mapStateToProps)(TableElement);
