@@ -16,8 +16,7 @@ class AddButton extends React.Component{
   }
 
   showSeats(k){
-      let value = this.props.form.getFieldValue(`seats-${k}`);
-      console.log(value);
+      let value = this.props.form.getFieldValue(`seats_${k}`);
       this.setState({
           seatvisible:true,
           seats:value
@@ -44,11 +43,38 @@ class AddButton extends React.Component{
   }
   handleOk(){
     this.props.form.validateFields((err, values) => {
-        if (!err) {
-            console.log(1);
-            this.setState({
-                visible: false,
-            });
+        if (!err) {           
+            let data= values;
+            let voidHall=[];
+            for(let i=1;i<=data.keys.length;i++){
+              let _voidHall={};
+
+              _voidHall.hallName=this.props.form.getFieldValue(`names_${i}`);
+              _voidHall.seat =this.props.form.getFieldValue(`seats_${i}`);
+              voidHall.push(_voidHall);
+            }
+            console.log(voidHall);
+            data.voidHall = JSON.stringify(voidHall);
+            console.log(data);
+
+            ajax({
+              type:"post",
+              url:"/theChainData/add",
+              data:{
+                  chainName:data.chainName,
+                  address:data.address,
+                  size:data.size,
+                  place:data.place,
+                  voidHall:data.voidHall,
+              },
+              success:function(){
+                  message.info('添加成功');
+                  this.props.show();
+                  this.setState({
+                      visible: false,
+                  });
+              }.bind(this)
+            })
         }
       });
       
@@ -88,6 +114,23 @@ class AddButton extends React.Component{
         keys: nextKeys,
       });
   }
+  checkchainName(rule, value, callback){
+      ajax({
+        type:"post",
+        url:"/theChainData/find",
+        data:{
+          findType:"exact",
+          chainName:value
+        },
+        success:function(data){
+          if(data.length>0){
+            callback("该影院已添加");
+          }else{
+            callback();
+          }
+        }.bind(this)
+      });
+    }
   render(){
       const { getFieldDecorator,getFieldValue} = this.props.form;
       const formItemLayout = {
@@ -117,7 +160,7 @@ class AddButton extends React.Component{
             required={false}
             key={k} 
           >
-            {getFieldDecorator(`names-${k}`, {
+            {getFieldDecorator(`names_${k}`, {
               validateTrigger: ['onChange', 'onBlur'],
               rules: [{
                 required: true,
@@ -140,7 +183,7 @@ class AddButton extends React.Component{
             label='座位'
             required={false} 
           >
-            {getFieldDecorator(`seats-${k}`, {
+            {getFieldDecorator(`seats_${k}`, {
               validateTrigger: ['onChange', 'onBlur'],
               rules: [{
                 required: true,
@@ -167,7 +210,7 @@ class AddButton extends React.Component{
                     handleOk={this.SeathandleOk.bind(this)} 
                     >
               </Seat>
-            <Button type="primary" style={{margin:"10px"}} onClick={this.showModal.bind(this)}>增加</Button>
+            <Button type="primary"  onClick={this.showModal.bind(this)}>增加</Button>
             <Modal title="添加数据" visible={this.state.visible}
               onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}
               okText="确定" cancelText="取消"
@@ -175,7 +218,9 @@ class AddButton extends React.Component{
               <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
                 <FormItem {...formItemLayout} label="院线名：" hasFeedback>
                       {getFieldDecorator('chainName', {
-                        rules: [{ required: true, message: '请输入院线名!' }],
+                        rules: [{ required: true, message: '请输入院线名!' },
+                                { validator:this.checkchainName.bind(this) }
+                        ],
                       })(
                         <Input type="text"  placeholder="院线名" />
                       )}
@@ -196,7 +241,9 @@ class AddButton extends React.Component{
               </FormItem>
               <FormItem {...formItemLayout} label="联系电话：" hasFeedback>
                       {getFieldDecorator('place', {
-                        rules: [{ required: true, message: '请输入联系电话!' }],
+                        rules: [{ required: true, message: '请输入联系电话!' },
+                                { pattern: /^[0-9]{11}$/, message: '请输入正确的电话号码!'}
+                        ],
                       })(
                         <Input type="text"  placeholder="联系电话" />
                       )}

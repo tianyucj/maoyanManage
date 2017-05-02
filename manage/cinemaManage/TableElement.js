@@ -60,7 +60,7 @@ class TableElement extends React.Component{
       render:(text,record) => (
          <span>
           <Button type="primary" onClick={this.showUpdataModel.bind(this)}>修改</Button>
-            <Button style={{marginLeft:"20px",backgroundColor:"white" ,color:"black"}} type="primary" onClick={()=>this.del(text._id)}>
+            <Button style={{marginLeft:"20px" }} type="danger" onClick={()=>this.del(text._id)}>
                 删除
             </Button>
         </span>
@@ -80,9 +80,21 @@ class TableElement extends React.Component{
         this.props.show(page, curpage);
       }.bind(this),
     };
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        store.dispatch({
+            type:"SHOW_BATCHDEL_CINEMA",
+            batchDel:selectedRows
+        });
+      },
+    };
     return (
         <div>
-            <Table pagination={pagination} dataSource={this.props.cinemaReducer.data.rows} columns={columns} bordered />
+            <Table  rowSelection={rowSelection} 
+                    pagination={pagination} 
+                    dataSource={this.props.cinemaReducer.data.rows} 
+                    columns={columns} bordered />
         </div>
       )
     }
@@ -91,7 +103,8 @@ class TableElement extends React.Component{
 const mapStateToProps = function(store){
     return {
         cinemaReducer:store.cinemaReducer,
-        operateReducer:store.operateReducer
+        operateReducer:store.operateReducer,
+
     }
 }
 export default connect(mapStateToProps)(TableElement);

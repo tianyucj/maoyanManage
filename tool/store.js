@@ -47,7 +47,8 @@ const filmReducer = function(state = film,action){
 // 影院管理的reducer，user用于点击修改时显示在弹窗上的数据，data用于用户影院管理展示的所有数据
 const cinema = {
 	cinema:{},
-	data:{}
+	data:{},
+	batchDel:[]
 }
 const cinemaReducer = function(state = cinema,action){
 	if(action.type == "SHOW_CINEMA"){
@@ -56,6 +57,10 @@ const cinemaReducer = function(state = cinema,action){
 	}
 	if(action.type == "SHOW_ALL_CINEMA"){
 		var newState = Object.assign({},state,{data:action.data});
+		return newState
+	}
+	if(action.type == "SHOW_BATCHDEL_CINEMA"){
+		var newState = Object.assign({},state,{batchDel:action.batchDel});
 		return newState
 	}
 	return state

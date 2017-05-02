@@ -90,10 +90,3 @@ class Updata extends React.Component{
     }
 }
 export default Form.create()(Updata);
-const mapStateToProps = function(store){
-    return {
-        cinemaReducer:store.cinemaReducer,
-        operateReducer:store.operateReducer
-    }
-}
-export default connect(mapStateToProps)(TableElement);
