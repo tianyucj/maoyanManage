@@ -1,0 +1,15 @@
+.seat_optional{
+	width: 17px;
+    height: 15px;
+    display: inline-block;
+    background: url('../imgs/seat_01.png') no-repeat;
+    margin-right: 7px;
+}
+
+
+.seat_null{
+    width: 17px;
+    height: 15px;
+    display: inline-block;
+    margin-right: 7px;	
+}
