@@ -87,7 +87,7 @@ class AddFilm extends React.Component{
      },
    };
 
-   return <div >
+   return <div>
    <Button type="primary" onClick={this.showModal.bind(this)} ghost>添加</Button>
    <Modal title="添加" visible={this.state.visible}
    onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}

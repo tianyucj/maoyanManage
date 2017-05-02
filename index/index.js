@@ -24,7 +24,7 @@ export default class Index extends React.Component{
       success:function(data){
         if(JSON.stringify(data) != "{}"){
           this.setState({
-            isShow:[data.name,<span onClick={this.logout.bind(this)}>撤销</span>]
+            isShow:[data.name,<span style={{marginLeft:"20px"}} onClick={this.logout.bind(this)}>撤销</span>]
           }) 
         }else{
           this.setState({

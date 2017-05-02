@@ -133,7 +133,7 @@ export default class AddHotFilm extends React.Component{
         this.state.selectedRows = selectedRows;
       }
     }
-    return <div>
+    return <div style={{marginBottom:"20px"}}>
     <Button type="primary" onClick={this.showModal.bind(this)} ghost>添加</Button>
     <Modal title="添加" style={{width:"1200px"}} visible={this.state.visible}
     onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}
