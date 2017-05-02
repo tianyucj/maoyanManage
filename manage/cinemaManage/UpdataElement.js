@@ -1,6 +1,8 @@
 import React from "react";
 import {ajax} from "../../tool/tools";
 import 'antd/dist/antd.css';
+import store from "../../tool/store";
+import {connect} from "react-redux";
 import {Modal,Button,Input,Form,Icon,message} from 'antd';
 const FormItem = Form.Item;
 
@@ -9,6 +11,7 @@ class Updata extends React.Component{
     super(props);
     this.state = { visible: false } 
   }
+
   handleSubmit(e){
       e.preventDefault();
       this.props.form.validateFields((err, values) => {
@@ -21,16 +24,18 @@ class Updata extends React.Component{
     this.props.form.validateFields((err, values) => {
         if (!err) {
             console.log(1);
-            this.setState({
-                visible: false,
-            });
+            store.dispatch({
+              type:"SHOW_UPDATE_MODAL",
+              updateVisible:false
+          });
         }
       });
       
     }
   handleCancel(){
-      this.setState({ 
-        visible: false,
+       store.dispatch({
+            type:"SHOW_UPDATE_MODAL",
+            updateVisible:false
       });
   }
   handleChange(value) {
@@ -50,34 +55,34 @@ class Updata extends React.Component{
       };
       return (
         <span>
-            <Modal title="修改数据" visible={this.state.visible}
+            <Modal title="修改数据" visible={this.props.operateReducer.updateVisible}
               onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}
               okText="确定" cancelText="取消"
             >
               <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
                 <FormItem {...formItemLayout} label="院线名：" hasFeedback>
-                      {getFieldDecorator('name', {
+                      {getFieldDecorator('chainName', {
                         rules: [{ required: true, message: '请输入院线名!' }],
                       })(
                         <Input type="text"  placeholder="院线名" />
                       )}
               </FormItem>
               <FormItem {...formItemLayout} label="地址：" hasFeedback>
-                      {getFieldDecorator('age', {
+                      {getFieldDecorator('address', {
                         rules: [{ required: true, message: '请输入地址!' }],
                       })(
                         <Input type="text"  placeholder="地址" />
                       )}
               </FormItem>
               <FormItem {...formItemLayout} label="规模：" hasFeedback>
-                      {getFieldDecorator('age', {
+                      {getFieldDecorator('size', {
                         rules: [{ required: true, message: '请输入规模大小!' }],
                       })(
                         <Input type="text"  placeholder="规模" />
                       )}
               </FormItem>
               <FormItem {...formItemLayout} label="联系电话：" hasFeedback>
-                      {getFieldDecorator('age', {
+                      {getFieldDecorator('place', {
                         rules: [{ required: true, message: '请输入联系电话!' }],
                       })(
                         <Input type="text"  placeholder="联系电话" />
@@ -89,4 +94,21 @@ class Updata extends React.Component{
       )
     }
 }
-export default Form.create()(Updata);
+
+const mapStateToProps = function(store){
+    return {
+        cinemaReducer:store.cinemaReducer,
+        operateReducer:store.operateReducer,
+    }
+}
+export default connect(mapStateToProps)(Form.create({
+  mapPropsToFields(props){
+    return {
+      chainName:{value:props.cinemaReducer.cinema.chainName},
+      address:{value:props.cinemaReducer.cinema.address},
+      size:{value:props.cinemaReducer.cinema.size},
+      place:{value:props.cinemaReducer.cinema.place},
+      voidHall:{value:props.cinemaReducer.cinema.voidHall},
+    }
+  }
+})(Updata));
