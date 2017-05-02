@@ -12,17 +12,23 @@ class UpdateChip extends React.Component{
     super(props);
     this.state = {
       cinemaData:[],
-      voidHall:[]
+      voidHall:[],
+      newKey:0
     }
   }
   handleCreate(){
     this.props.form.validateFields((err, values) => {
       if(!err){
         let chipList = [];
-        let cinema = this.props.cinemaMatchReducer.selectData;
-        console.log("selectData123124124221",cinema);
-        for(let i = 0 ; i < chipList.length ; i++){
-            if(cinema.showTime == values.showTime && cinema.voidHall == values.voidHall && cinema.theChainName == values.theChainName){
+        let cinema = this.props.cinemaMatchReducer.cinema;
+        let chipArr = this.props.cinemaMatchReducer.cinema.chipArrangement;
+        let select = this.props.cinemaMatchReducer.selectData;
+        // 修改之前先将选中修改的数据从原数据中删除，然后再传ajax来进行最终修改
+        for(let i = 0 ; i < chipArr.length ; i++){
+            if(select.showTime == chipArr[i].showTime && select.voidHall == chipArr[i].voidHall && select.theChainName == chipArr[i].theChainName){
+              chipArr.splice(i,1);
+            }
+            if(chipArr[i].showTime == values.showTime && chipArr[i].voidHall == values.voidHall && chipArr[i].theChainName == values.theChainName){
               Modal.confirm({
                 title:'提示',
                 content:"放映时间重复",
@@ -31,24 +37,21 @@ class UpdateChip extends React.Component{
               return false;
             }
           }
-          chipList.push(values);
+          chipArr.push(values);
           ajax({
             type:"post",
             url:"/onlineFilmData/update",
-            data:{_id:cinema._id,chipArrangement:JSON.stringify(chipList)},
+            data:{_id:cinema._id,chipArrangement:JSON.stringify(chipArr)},
             success:function(data){
               notification.open({
                 message: '修改提示',
                 description: "修改成功！",
               });
+
               console.log("修改在线影片信息的返回信息：",data);
             }
           });
         }
-        // store.dispatch({
-        //   type:"SHOW_UPDATECHIPARRANGEMENT_MODAL",
-        //   updateChipArrangementVisible:false
-        // })
     });
   }
   handleCancel(){
@@ -95,9 +98,11 @@ class UpdateChip extends React.Component{
       }.bind(this)
     });
   }
-
   componentWillMount(){
     this.cinemaList();
+    this.setState({
+      newKey:this.state.newKey++
+    })
   }
   render(){
     const { getFieldDecorator } = this.props.form;
@@ -114,7 +119,7 @@ class UpdateChip extends React.Component{
         },
       };
     return (
-      <Modal visible={this.props.operateReducer.updateChipArrangementVisible} title="修改影片排片" okText="确认修改" onCancel={this.handleCancel}
+      <Modal key={this.state.newKey} visible={this.props.operateReducer.updateChipArrangementVisible} title="修改影片排片" okText="确认修改" onCancel={this.handleCancel}
         onOk={this.handleCreate.bind(this)}>
         <Form>
         <FormItem {...formItemLayout} label="影院" labelCol={{ span: 6 }}
@@ -165,8 +170,6 @@ const mapStateToProps = function(store){
 }
 export default connect(mapStateToProps)(Form.create({
   mapPropsToFields(props){
-    let selectData = props.cinemaMatchReducer.selectData[0];
-    console.log("dhfjkasfeu8908908f9a",props.cinemaMatchReducer.selectData[0]);
     return {
       theChainName:{value:props.cinemaMatchReducer.selectData.theChainName},
       voidHall:{value:props.cinemaMatchReducer.selectData.voidHall},

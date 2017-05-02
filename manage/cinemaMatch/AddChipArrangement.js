@@ -13,19 +13,16 @@ class AddChipArrangement extends React.Component{
     this.state = {
       cinemaData:[],
       voidHall:[],
-      isTure:[false,false,false,false]
+      isTure:[false,false,false,false],
+      newKey:0
     }
   }
   handleCreate(){
     this.props.form.validateFields((err, values) => {
       if(!err){
         var values = this.props.form.getFieldsValue();
-        let chipList = [];
-        let cinema = this.props.cinemaMatchReducer.cinema[0];
-        let chipArrangement = cinema.chipArrangement;
-        if(chipArrangement){
-          chipList = chipArrangement;
-        }
+        let chipList = this.props.cinemaMatchReducer.addChip.chipArrangement || [];
+        console.log("this.props.cinemaMatchReducer.addChip.chipArrangement",this.props.cinemaMatchReducer.addChip.chipArrangement);
         console.log("chipList",chipList);
         if(chipList.length > 0){
           for(let i = 0 ; i < chipList.length ; i++){
@@ -43,7 +40,7 @@ class AddChipArrangement extends React.Component{
           ajax({
             type:"post",
             url:"/onlineFilmData/update",
-            data:{_id:cinema._id,chipArrangement:JSON.stringify(chipList)},
+            data:{_id:this.props.cinemaMatchReducer.addChip._id,chipArrangement:JSON.stringify(chipList)},
             success:function(data){
               notification.open({
                 message: '排片提示',
@@ -58,7 +55,7 @@ class AddChipArrangement extends React.Component{
             ajax({
               type:"post",
               url:"/onlineFilmData/update",
-              data:{_id:cinema._id,chipArrangement:JSON.stringify(chipList)},
+              data:{_id:this.props.cinemaMatchReducer.addChip._id,chipArrangement:JSON.stringify(chipList)},
               success:function(data){
                 notification.open({
                   message: '排片提示',
@@ -76,7 +73,6 @@ class AddChipArrangement extends React.Component{
       type:"SHOW_ADDCHIPARRANGEMENT_MODAL",
       addChipArrangementVisible:false
     })
-    console.log("eeeeeeeeeeeee",e);
   }
   cinemaList(){
     // 取出所有的影院名
@@ -119,6 +115,9 @@ class AddChipArrangement extends React.Component{
 
   componentWillMount(){
     this.cinemaList();
+    this.setState({
+      newKey:this.state.newKey++
+    })
   }
   render(){
     const { getFieldDecorator } = this.props.form;
@@ -135,7 +134,7 @@ class AddChipArrangement extends React.Component{
         },
       };
     return (
-      <Modal visible={this.props.operateReducer.addChipArrangementVisible} title="增加影片排片" okText="确认添加" onCancel={this.handleCancel}
+      <Modal key={this.state.newKey} visible={this.props.operateReducer.addChipArrangementVisible} title="增加影片排片" okText="确认添加" onCancel={this.handleCancel}
         onOk={this.handleCreate.bind(this)}>
         <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="影院" labelCol={{ span: 6 }}

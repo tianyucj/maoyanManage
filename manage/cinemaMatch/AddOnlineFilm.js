@@ -13,7 +13,8 @@ class AddOnlineFilm extends React.Component{
       filterDropdownVisible: false,
       searchText: '',
       filtered: false,
-      selectData:[]
+      selectData:[],
+      newKey:0
     }
   }
   onInputChange(e){
@@ -85,6 +86,9 @@ class AddOnlineFilm extends React.Component{
   }
   componentWillMount(){
     this.showFilmData();
+    this.setState({
+      newKey:this.state.newKey++
+    })
   }
   render(){
     const columns = [{
@@ -123,15 +127,16 @@ class AddOnlineFilm extends React.Component{
       const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
           console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+
+        },
+        onSelect: (record, selected, selectedRows) => {
+          console.log(record, selected, selectedRows);
           this.setState({
             selectData:selectedRows
           });
         },
-        onSelect: (record, selected, selectedRows) => {
-          console.log(record, selected, selectedRows);
-        },
         onSelectAll: (selected, selectedRows, changeRows) => {
-          console.log(selected, selectedRows, changeRows);
+          console.log("90890890",selected, selectedRows, changeRows);
         },
         getCheckboxProps: record => ({
           disabled: record.name === 'Disabled User',    // Column configuration not to be checked
@@ -139,7 +144,7 @@ class AddOnlineFilm extends React.Component{
       };
 
     return (
-      <Modal width="1000px" visible={this.props.operateReducer.addOnlineFilmVisible} title="增加上映影片" okText="确认添加" onCancel={this.handleCancel}
+      <Modal key={this.state.newKey} width="1000px" visible={this.props.operateReducer.addOnlineFilmVisible} title="增加上映影片" okText="确认添加" onCancel={this.handleCancel}
         onOk={this.handleCreate.bind(this)}>
           <Search placeholder="请出入要查询的数据" style={{ width: 200 }} onSearch={value => this.searchFilmData(value)}/>
           <Table rowSelection={rowSelection} columns={columns} dataSource={this.state.filmData} bordered/>
