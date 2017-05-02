@@ -1,5 +1,5 @@
 import React from "react";
-import { Card , Button , Modal} from 'antd';
+import { Card , Button , Modal , Row , Col} from 'antd';
 import {ajax} from "../../tool/tools";
 import CinemaTable from "../cinemaMatch/CinemaTable";
 import store from "../../tool/store";
@@ -7,15 +7,21 @@ import {connect} from "react-redux";
 import AddOnlineFilm from "./AddOnlineFilm";
 import AddChipArrangement from "./AddChipArrangement";
 import ViewChip from "./ViewChip";
+import SearchOnlineFilm from "./SearchOnlineFilm";
 
 class CinemaMatch extends React.Component{
   constructor(props){
     super(props);
   }
-  showFilm(){
+  showFilm(obj){
+    let newObj = {};
+    if(obj){
+      newObj = obj;
+    }
     ajax({
        type:"post",
        url:"/onlineFilmData/find",
+       data:newObj,
        success:function(data){
          store.dispatch({
            type:"SHOW_ALL_CINEMAMATCH",
@@ -28,12 +34,6 @@ class CinemaMatch extends React.Component{
     store.dispatch({
       type:"SHOW_ADDONLINEFILM_MODAL",
       addOnlineFilmVisible:true
-    })
-  }
-  showChipArrangementModal(){
-    store.dispatch({
-      type:"SHOW_CHIPARRANGEMENT_MODAL",
-      showChipArrangementVisible:true
     })
   }
   deleteContents(){
@@ -62,9 +62,12 @@ class CinemaMatch extends React.Component{
     this.showFilm();
   }
   render(){
-    return (<Card title="院线匹配" extra={<span><Button onClick={()=>this.showAddOnlineFilmModal()} type="primary" >增加上映影片</Button>
-      <Button onClick={()=>this.showChipArrangementModal()}>查看排片情况</Button>
-      <Button onClick={()=>this.deleteContents()} type="primary" >批量删除</Button></span>} >
+    return (<Card title="院线匹配">
+      <Row style={{marginTop:20,marginBottom:20}}>
+        <Col span={3}><Button onClick={()=>this.showAddOnlineFilmModal()} type="primary" >增加上映影片</Button></Col>
+        <Col span={3}><Button onClick={()=>this.deleteContents()} type="danger" >批量删除</Button></Col>
+        <Col span={8}><SearchOnlineFilm showFilm={this.showFilm.bind(this)}></SearchOnlineFilm></Col>
+      </Row>
       <ViewChip></ViewChip>
       <AddChipArrangement></AddChipArrangement>
       <AddOnlineFilm showFilm={this.showFilm}></AddOnlineFilm>

@@ -89,11 +89,18 @@ const cinemaReducer = function(state = cinema,action){
 const cinemaMatch = {
 	cinema:[],
 	data:[],
-	selectData:[]
+	selectData:[],
+	addChip:[]
 }
 const cinemaMatchReducer = function(state = cinemaMatch,action){
 	if(action.type == "SHOW_CINEMAMATCH"){
+		// 查看排片情况时使用
 		var newState = Object.assign({},state,{cinema:action.cinema});
+		return newState
+	}
+	if(action.type == "SHOW_ADD_CINEMAMATCH"){
+		// 增加排片时使用
+		var newState = Object.assign({},state,{addChip:action.addChip});
 		return newState
 	}
 	if(action.type == "SHOW_ALL_CINEMAMATCH"){
