@@ -7,6 +7,7 @@ import FilmManage from "../manage/filmManage/FilmManage";
 import CinemaManage from "../manage/cinemaManage/CinemaManage";
 import CinemaMatch from "../manage/cinemaMatch/CinemaMatch";
 import WellReceived from "../manage/wellReceived/WellReceived";
+import OrderManage from "../manage/orderManage/OrderManage";
 import {Route,Router,IndexRoute,hashHistory} from "react-router";
 import Index from "../index/Index";
 
@@ -23,6 +24,7 @@ ReactDOM.render(<Provider store={store}><Router history={hashHistory}>
         <Route path="/cinema" component={CinemaManage}></Route>
         <Route path="/cinemaMatch" component={CinemaMatch}></Route>
         <Route path="/wellReceived" component={WellReceived}></Route>
+        <Route path="/orderManage" component={OrderManage}></Route>
       </Route>
     </Route>
   </Router></Provider>,document.getElementById("manage"));

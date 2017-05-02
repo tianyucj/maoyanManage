@@ -1,11 +1,31 @@
 import {createStore,combineReducers} from "redux";
 
 const wiget = {
-	updateVisible:false
+	updateVisible:false,
+	addOnlineFilmVisible:false,//院线匹配增加在线影片的弹窗
+	addChipArrangementVisible:false,//院线匹配增加排片情况的弹窗
+	showChipArrangementVisible:false,//院线匹配查看排片情况的弹窗
+	updateChipArrangementVisible:false//院线匹配修改排片情况的弹窗
 }
 const operateReducer = function(state = wiget,action){
 	if(action.type == "SHOW_UPDATE_MODAL"){
 		var newState = Object.assign({},state,{updateVisible:action.updateVisible});
+		return newState
+	}
+	if(action.type == "SHOW_ADDONLINEFILM_MODAL"){
+		var newState = Object.assign({},state,{addOnlineFilmVisible:action.addOnlineFilmVisible});
+		return newState
+	}
+	if(action.type == "SHOW_ADDCHIPARRANGEMENT_MODAL"){
+		var newState = Object.assign({},state,{addChipArrangementVisible:action.addChipArrangementVisible});
+		return newState
+	}
+	if(action.type == "SHOW_CHIPARRANGEMENT_MODAL"){
+		var newState = Object.assign({},state,{showChipArrangementVisible:action.showChipArrangementVisible});
+		return newState
+	}
+	if(action.type == "SHOW_UPDATECHIPARRANGEMENT_MODAL"){
+		var newState = Object.assign({},state,{updateChipArrangementVisible:action.updateChipArrangementVisible});
 		return newState
 	}
 	return state
@@ -65,17 +85,38 @@ const cinemaReducer = function(state = cinema,action){
 	}
 	return state
 }
-// 院线匹配的reducer，user用于点击修改时显示在弹窗上的数据，data用于院线匹配界面展示的所有数据
+// 院线匹配的reducer，cinema用于点击对应数据的增加排片该条数据，data用于院线匹配界面展示的所有数据
 const cinemaMatch = {
-	cinema:{},
-	data:{}
+	cinema:[],
+	data:[],
+	selectData:[]
 }
 const cinemaMatchReducer = function(state = cinemaMatch,action){
 	if(action.type == "SHOW_CINEMAMATCH"){
-		var newState = Object.assign({},state,{cinemaMatch:action.cinemaMatch});
+		var newState = Object.assign({},state,{cinema:action.cinema});
 		return newState
 	}
 	if(action.type == "SHOW_ALL_CINEMAMATCH"){
+		var newState = Object.assign({},state,{data:action.data});
+		return newState
+	}
+	if(action.type == "DELETECONTENTS_ONLINE"){
+		var newState = Object.assign({},state,{selectData:action.selectData});
+		return newState
+	}
+	return state
+}
+//订单管理
+const orderManage = {
+	orderManage:{},
+	data:{}
+}
+const orderManageReducer = function(state = orderManage,action){
+	if(action.type == "SHOW_ORDERMANAGE"){
+		var newState = Object.assign({},state,{orderManage:action.orderManage});
+		return newState
+	}
+	if(action.type == "SHOW_ALL_ORDERMANAGE"){
 		var newState = Object.assign({},state,{data:action.data});
 		return newState
 	}
@@ -87,7 +128,8 @@ const reducers = combineReducers({
 	userReducer:userReducer,
 	filmReducer:filmReducer,
 	cinemaReducer:cinemaReducer,
-	cinemaMatchReducer:cinemaMatchReducer
+	cinemaMatchReducer:cinemaMatchReducer,
+	orderManageReducer:orderManageReducer
 });
 
 export default createStore(reducers);

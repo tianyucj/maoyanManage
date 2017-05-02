@@ -12,9 +12,9 @@ class Login extends React.Component{
 	      if (!err) {
 	      	delete values.remember;
 	      	ajax({
-		  		type:"poet",
+		  		type:"post",
 		  		url:"/userLogData/find",
-		  		data:{acc:values.username,pwd:values.pwd,findType:"exact"},
+		  		data:{acc:values.username,pwd:values.pwd,findType:"exact",addSession:1},
 		  		success:function(data){
 		  			if(data.length > 0){
 			  			notification['success']({
