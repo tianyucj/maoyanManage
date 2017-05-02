@@ -3,6 +3,7 @@ import {ajax} from "../../tool/tools";
 import AddElement from "./AddElement";
 import Search from "./Search";
 import TableElement from "./TableElement";
+import UpdataElement from "./UpdataElement";
 import 'antd/dist/antd.css';
 import {Card,Row ,Col,message,Button,Modal} from 'antd';
 import store from "../../tool/store";
@@ -12,15 +13,44 @@ const confirm = Modal.confirm;
 class CinemaManage extends React.Component{
 	constructor(props){
 	    super(props);
+	    this.state = {
+            forPage:{}
+        }
 	}
-	show(page,eachpage=3){
+	show(page,pageSize,searchData){
+		var obj={
+            page:page,
+            rows:pageSize
+        };
+        if(searchData != undefined){
+            this.setState({
+				forPage:searchData
+            })
+            	
+            if(searchData.chainName != undefined){
+                obj={
+                    page:page,
+                    rows:pageSize,
+                    chainName:searchData.chainName
+                }
+            }
+            if(searchData.address != undefined){
+                obj={
+                    page:page,
+                    rows:pageSize,
+                    address:searchData.address
+                }
+            }
+        }else{
+        	obj={
+	            page:page,
+	            rows:pageSize
+	        }
+        }
 	  	ajax({
 	  		type:"post",
 	  		url:"/theChainData/find",
-	  		data:{
-	  			page:page,
-	  			rows:eachpage
-	  		},
+	  		data:obj,
 	  		success:function(data){
 	  			// console.log(data);
 	  			store.dispatch({
@@ -68,12 +98,12 @@ class CinemaManage extends React.Component{
 	    		<Button type="danger" onClick={this.batchDel.bind(this)}>批量删除</Button>
 	    		</Col>
 	    		<Col span={8}>
-	    		<Search ></Search>
+	    		<Search show={this.show.bind(this)}></Search>
 	    		</Col>
 
 	    		</Row>
-	    		
-	    		<TableElement show={this.show.bind(this)}></TableElement>
+	    		<UpdataElement></UpdataElement>
+	    		<TableElement forPage={this.state.forPage} show={this.show.bind(this)}></TableElement>
 	    	</Card>
     	)
   	}

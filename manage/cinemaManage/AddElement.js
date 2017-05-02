@@ -70,6 +70,7 @@ class AddButton extends React.Component{
               success:function(){
                   message.info('添加成功');
                   this.props.show();
+                  this.props.form.resetFields();
                   this.setState({
                       visible: false,
                   });

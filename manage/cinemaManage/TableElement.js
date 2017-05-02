@@ -9,12 +9,15 @@ class TableElement extends React.Component{
     constructor(props){
       super(props);
     }
-    showUpdataModel(){
+    showUpdataModel(text){
         store.dispatch({
               type:"SHOW_UPDATE_MODAL",
               updateVisible:true
           });
-        console.log(1);
+        store.dispatch({
+              type:"SHOW_CINEMA",
+              cinema:text
+          });
     }
     del(id){
 
@@ -59,7 +62,7 @@ class TableElement extends React.Component{
       key:"action",
       render:(text,record) => (
          <span>
-          <Button type="primary" onClick={this.showUpdataModel.bind(this)}>修改</Button>
+          <Button type="primary" onClick={()=>this.showUpdataModel(text)}>修改</Button>
             <Button style={{marginLeft:"20px" }} type="danger" onClick={()=>this.del(text._id)}>
                 删除
             </Button>
@@ -74,10 +77,18 @@ class TableElement extends React.Component{
       pageSizeOptions:["3","5","10","20"],
       showSizeChanger:true,
       onChange:function(page, curpage){
-        this.props.show(page, curpage);
+        if(this.props.forPage != undefined){
+            this.props.show(page, curpage,this.props.forPage);
+        }else{
+            this.props.show(page, curpage);
+        }
       }.bind(this),
       onShowSizeChange:function(page, curpage){
-        this.props.show(page, curpage);
+        if(this.props.forPage != undefined){
+            this.props.show(page, curpage,this.props.forPage);
+        }else{
+            this.props.show(page, curpage);
+        }
       }.bind(this),
     };
     const rowSelection = {
@@ -103,8 +114,7 @@ class TableElement extends React.Component{
 const mapStateToProps = function(store){
     return {
         cinemaReducer:store.cinemaReducer,
-        operateReducer:store.operateReducer,
-
+        operateReducer:store.operateReducer,  
     }
 }
 export default connect(mapStateToProps)(TableElement);
