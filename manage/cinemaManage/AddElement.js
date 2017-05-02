@@ -1,6 +1,6 @@
 import React from "react";
 import {ajax} from "../../tool/tools";
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import Seat from "./Seat";
 import {Modal,Button,Input,Form,Icon,message} from 'antd';
 const FormItem = Form.Item;

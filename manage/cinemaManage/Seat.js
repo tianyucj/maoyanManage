@@ -1,6 +1,5 @@
 import React from "react";
 import 'antd/dist/antd.css';
-import './css/style.css';
 import {Modal,Button,Input,Form} from 'antd';
 
 
@@ -10,6 +9,7 @@ export default class Seat extends React.Component{
   	}
 
   	render(){
+
   		let seatValue = this.props.seats || "[]";
   		seatValue = JSON.parse(seatValue);
   		let trAry = [];
@@ -43,3 +43,4 @@ export default class Seat extends React.Component{
   			)
   	}
 }
+

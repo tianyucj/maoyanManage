@@ -1,8 +1,10 @@
+@import 'style.css';
+
 .seat_optional{
 	width: 17px;
     height: 15px;
     display: inline-block;
-    background: url('../imgs/seat_01.png') no-repeat;
+    background: url(../manage/cinemaManage/imgs/seat_01.png) no-repeat;
     margin-right: 7px;
 }
 
