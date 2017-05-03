@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import store from "../../tool/store";
 import {connect} from "react-redux";
 import Seat from "./Seat";
-import {Modal,Button,Input,Form,Icon,message} from 'antd';
+import {Modal,Button,Input,Form,Icon,message,notification} from 'antd';
 const FormItem = Form.Item;
 
 let uuid = 0;
@@ -102,7 +102,10 @@ class Updata extends React.Component{
               },
               success:function(){
                   uuid = 0;
-                  message.info('修改成功');
+                  notification.open({
+                    message: '修改提示',
+                    description: "院线修改成功！",
+                  });
                   this.props.show();
                   store.dispatch({
                       type:"SHOW_UPDATE_MODAL",
