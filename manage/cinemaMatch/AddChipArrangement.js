@@ -13,8 +13,7 @@ class AddChipArrangement extends React.Component{
     this.state = {
       cinemaData:[],
       voidHall:[],
-      isTure:[false,false,false,false],
-      newKey:0
+      isTure:[false,false,false,false]
     }
   }
   handleCreate(){
@@ -22,8 +21,6 @@ class AddChipArrangement extends React.Component{
       if(!err){
         var values = this.props.form.getFieldsValue();
         let chipList = this.props.cinemaMatchReducer.addChip.chipArrangement || [];
-        console.log("this.props.cinemaMatchReducer.addChip.chipArrangement",this.props.cinemaMatchReducer.addChip.chipArrangement);
-        console.log("chipList",chipList);
         if(chipList.length > 0){
           for(let i = 0 ; i < chipList.length ; i++){
               if(chipList[i].showTime == values.showTime && chipList[i].voidHall == values.voidHall && chipList[i].theChainName == values.theChainName){
@@ -36,7 +33,6 @@ class AddChipArrangement extends React.Component{
               }
             }
           chipList.push(values);
-
           ajax({
             type:"post",
             url:"/onlineFilmData/update",
@@ -57,12 +53,13 @@ class AddChipArrangement extends React.Component{
               url:"/onlineFilmData/update",
               data:{_id:this.props.cinemaMatchReducer.addChip._id,chipArrangement:JSON.stringify(chipList)},
               success:function(data){
+                console.log("没有排片请排片后的数据",this.props.cinemaMatchReducer.addChip);
                 notification.open({
                   message: '排片提示',
                   description: "排片成功，您还可以继续添加排片信息，否则请点击取消按钮退出！",
                 });
                 console.log("循环外修改在线影片信息的返回信息：",data);
-              }
+              }.bind(this)
             });
         }
       }
@@ -73,6 +70,7 @@ class AddChipArrangement extends React.Component{
       type:"SHOW_ADDCHIPARRANGEMENT_MODAL",
       addChipArrangementVisible:false
     })
+    this.props.form.resetFields();
   }
   cinemaList(){
     // 取出所有的影院名
@@ -92,11 +90,13 @@ class AddChipArrangement extends React.Component{
   }
   voidHallList(value, option){
     // 根据影院名的变化取出对应的影厅
+    console.log("影院名",value);
     ajax({
       type:"post",
       url:"/theChainData/find",
       data:{chainName:value,findType:"exact"},
       success:function(data){
+        console.log("查询出来的影院名",data);
         let parseData = JSON.parse(data);
         let hallName = [];
         for(let i = 0; i < parseData.length; i++){
@@ -107,7 +107,16 @@ class AddChipArrangement extends React.Component{
             this.setState({
               voidHall:hallName
             });
+          }else{
+            this.setState({
+              voidHall:[]
+            });
           }
+        }
+        if(this.state.voidHall.length < 0 ){
+          this.setState({
+            newKey:this.state.newKey++
+          })
         }
       }.bind(this)
     });
@@ -115,10 +124,8 @@ class AddChipArrangement extends React.Component{
 
   componentWillMount(){
     this.cinemaList();
-    this.setState({
-      newKey:this.state.newKey++
-    })
   }
+
   render(){
     const { getFieldDecorator } = this.props.form;
     const cinemaOptions = this.state.cinemaData.map(cinema => <Option key={cinema} value={cinema}>{cinema}</Option>);
@@ -133,24 +140,25 @@ class AddChipArrangement extends React.Component{
           sm: { span: 14 },
         },
       };
+      console.log(this.state.newKey);
     return (
-      <Modal key={this.state.newKey} visible={this.props.operateReducer.addChipArrangementVisible} title="增加影片排片" okText="确认添加" onCancel={this.handleCancel}
+      <Modal visible={this.props.operateReducer.addChipArrangementVisible} title="增加影片排片" okText="确认添加" onCancel={this.handleCancel}
         onOk={this.handleCreate.bind(this)}>
         <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="影院" labelCol={{ span: 6 }}
-        wrapperCol={{ span: 12 }}>
+        wrapperCol={{ span: 12 }} hasFeedback>
           {getFieldDecorator('theChainName', {
-            rules: [{ required: true }],
+            rules: [{ required: true ,message:"请选择影院！"}],
           })(
-            <Select defaultValue={this.state.cinemaData[0]} onChange={this.voidHallList.bind(this)} style={{ width: 90 }}>
+            <Select onChange={this.voidHallList.bind(this)} style={{ width: 90 }}>
               {cinemaOptions}
             </Select>
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="影厅" labelCol={{ span: 6 }}
-        wrapperCol={{ span: 12 }}>
+        wrapperCol={{ span: 12 }} hasFeedback>
           {getFieldDecorator('voidHall', {
-            rules: [{ required: true }],
+            rules: [{ required: true ,message:"请选择影厅！"}],
           })(
             <Select style={{ width: 90 }}>
               {voidHallOptions}
@@ -158,17 +166,17 @@ class AddChipArrangement extends React.Component{
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="放映时间：" labelCol={{ span: 6 }}
-        wrapperCol={{ span: 12 }}>
+        wrapperCol={{ span: 12 }} hasFeedback>
           {getFieldDecorator('showTime', {
-            rules: [{ required: true }],
+            rules: [{ required: true ,message:"请输入放映时间！"},{pattern: /^[0-9]{1,2}:[0-9]{1,2}$/, message: '格式不正确，请输入格式为xx:xx的时间!'}],
           })(
             <Input placeholder="请输入放映时间" />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="票价" labelCol={{ span: 6 }}
-        wrapperCol={{ span: 12 }}>
+        wrapperCol={{ span: 12 }} hasFeedback>
           {getFieldDecorator('ticketPrice', {
-            rules: [{ required: true }],
+            rules: [{ required: true ,message:"请输入票价！"},{pattern: /^\d{1,}$/, message: '请输入数字！'}],
           })(<Input placeholder="请输入票价" />
           )}
         </FormItem>

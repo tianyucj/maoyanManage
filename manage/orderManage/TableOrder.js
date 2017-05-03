@@ -8,7 +8,6 @@ const confirm = Modal.confirm;
 class TableOrder extends React.Component{
   constructor(props){
     super(props);
-
   }
   delete(text){
     confirm({
@@ -38,7 +37,16 @@ class TableOrder extends React.Component{
         console.log('Cancel');
       },
     });
-
+  }
+  showUpdateModal(text){
+    store.dispatch({
+      type:"SHOW_UPDATE_MODAL",
+      updateVisible:true
+    })
+    store.dispatch({
+      type:"SHOW_ORDERMANAGE",
+      orderManage:text
+    })
   }
   render(){
     const columns = [{
@@ -82,8 +90,8 @@ class TableOrder extends React.Component{
       key: 'action',
       render: (text, record) => (
         <span>
-        <Button type="danger" onClick={()=>{this.delete(text)}}>删除</Button>
-
+          <Button type="primary" onClick={()=>{this.showUpdateModal(text)}}>修改</Button>
+          <Button type="danger" onClick={()=>{this.delete(text)}}>删除</Button>
         </span>
         ),
       }];
@@ -103,13 +111,13 @@ class TableOrder extends React.Component{
       }
       return <div >
       <Table bordered columns={columns} pagination={pagination} dataSource={this.props.orderManageReducer.data.rows} />
-
       </div>
     }
   }
   const mapStateToProps = function(store){
     return {
-      orderManageReducer:store.orderManageReducer
+      orderManageReducer:store.orderManageReducer,
+      operateReducer:store.operateReducer
     }
   }
   export default connect(mapStateToProps)(TableOrder);

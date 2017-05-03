@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import MaoyanUser from "./MaoyanUser";
 import TableOrder from "./TableOrder";
 import SearchOrder from "./SearchOrder";
+import UpdateOrder from "./UpdateOrder";
 
 class OrderManage extends React.Component{
 	constructor(props){
@@ -69,6 +70,7 @@ class OrderManage extends React.Component{
             </Col>
 			</Row>
             <TableOrder forPage={this.state.forPage} show={this.show.bind(this)}></TableOrder>
+						<UpdateOrder show={this.show.bind(this)}></UpdateOrder>
 			</Card>
 			</div>
 			)

@@ -7,6 +7,9 @@ import {ajax} from "../../tool/tools";
 class CinemaTable extends React.Component{
   constructor(props){
     super(props);
+    this.state = {
+      keysNum:this.props.keys
+    }
   }
   delFilm(id){
     ajax({
@@ -14,7 +17,7 @@ class CinemaTable extends React.Component{
       url:"/onlineFilmData/del",
       data:{_id:id},
       success:function(){
-        this.props.showFilm();
+        this.props.showFilm(1);
       }.bind(this)
     });
   }
@@ -27,7 +30,9 @@ class CinemaTable extends React.Component{
       type:"SHOW_ADD_CINEMAMATCH",
       addChip:text
     })
-    console.log("88888888888",text);
+    this.setState({
+      keysNum:this.state.keysNum++
+    })
   }
   showChipArrangementModal(text){
     store.dispatch({
@@ -89,13 +94,13 @@ class CinemaTable extends React.Component{
       onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         // 批量删除时获取的数据
-      },
-      onSelect: (record, selected, selectedRows) => {
-        console.log(record, selected, selectedRows);
         store.dispatch({
           type:"DELETECONTENTS_ONLINE",
           selectData:selectedRows
         });
+      },
+      onSelect: (record, selected, selectedRows) => {
+        console.log(record, selected, selectedRows);
       },
       onSelectAll: (selected, selectedRows, changeRows) => {
         console.log(selected, selectedRows, changeRows);
@@ -104,9 +109,22 @@ class CinemaTable extends React.Component{
         disabled: record.name === 'Disabled User',    // Column configuration not to be checked
       }),
     };
-
+    let data = this.props.cinemaMatchReducer.data;
+    const pagination = {
+      current:data.curpage,
+      pageSize:data.eachpage,
+      total:data.total,
+      showSizeChanger:true,
+      pageSizeOptions:['5','10','20'],
+      onChange:function(page,pageSize){
+        this.props.showFilm(page,pageSize,this.props.searchCondition,this.props.searchContent);
+      }.bind(this),
+      onShowSizeChange:function(page,pageSize){
+        this.props.showFilm(page,pageSize);
+      }.bind(this)
+    }
     return <div>
-				<Table rowSelection={rowSelection} columns={columns} dataSource={this.props.cinemaMatchReducer.data} bordered/>
+				<Table rowKey="id1" rowSelection={rowSelection} columns={columns} pagination={pagination} dataSource={this.props.cinemaMatchReducer.data.rows} bordered/>
 			</div>
   }
 }

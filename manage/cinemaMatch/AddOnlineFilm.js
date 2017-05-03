@@ -11,16 +11,11 @@ class AddOnlineFilm extends React.Component{
     this.state={
       filmData:[],
       filterDropdownVisible: false,
-      searchText: '',
       filtered: false,
       selectData:[],
       newKey:0
     }
   }
-  onInputChange(e){
-    this.setState({ searchText: e.target.value });
-  }
-
   handleCancel(){
     store.dispatch({
       type:"SHOW_ADDONLINEFILM_MODAL",
@@ -43,7 +38,7 @@ class AddOnlineFilm extends React.Component{
               url:"/onlineFilmData/add",
               data:selectData[i],
               success:function(data){
-                this.props.showFilm();
+                this.props.showFilm(1);
                 this.handleCancel();
               }.bind(this)
             })
@@ -57,12 +52,21 @@ class AddOnlineFilm extends React.Component{
       });
     }
   }
-  showFilmData(){
+  showFilmData(page,pageSize,content){
+    let newObj = {
+      page:page,
+      rows:pageSize
+    }
+    let type = "chName";
+    if(content){
+      newObj[type] = content;
+    }
     ajax({
       type:"post",
       url:"/filmData/find",
+      data:newObj,
       success:function(data){
-        console.log(data);
+        console.log("二级查询出来的数据",data);
         this.setState({
           filmData:data
         });
@@ -71,24 +75,13 @@ class AddOnlineFilm extends React.Component{
   }
 
   searchFilmData(value){
-    console.log(value);
-    ajax({
-      type:"post",
-      url:"/filmData/find",
-      data:{chName:value},
-      success:function(data){
-        console.log(data);
-        this.setState({
-          filmData:data
-        });
-      }.bind(this)
-    });
+    this.setState({
+      searchContent:value
+    })
+    this.showFilmData(1,5,value);
   }
   componentWillMount(){
     this.showFilmData();
-    this.setState({
-      newKey:this.state.newKey++
-    })
   }
   render(){
     const columns = [{
@@ -127,13 +120,12 @@ class AddOnlineFilm extends React.Component{
       const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
           console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-
-        },
-        onSelect: (record, selected, selectedRows) => {
-          console.log(record, selected, selectedRows);
           this.setState({
             selectData:selectedRows
           });
+        },
+        onSelect: (record, selected, selectedRows) => {
+          console.log("39471283491734",record, selected, selectedRows);
         },
         onSelectAll: (selected, selectedRows, changeRows) => {
           console.log("90890890",selected, selectedRows, changeRows);
@@ -142,12 +134,26 @@ class AddOnlineFilm extends React.Component{
           disabled: record.name === 'Disabled User',    // Column configuration not to be checked
         }),
       };
+      let data = this.state.filmData;
+      const pagination = {
+        current:data.curpage,
+        pageSize:data.eachpage,
+        total:data.total,
+        showSizeChanger:true,
+        pageSizeOptions:['5','10','20'],
+        onChange:function(page,pageSize){
+          this.showFilmData(page,pageSize,this.state.searchContent);
+        }.bind(this),
+        onShowSizeChange:function(page,pageSize){
+          this.showFilmData(page,pageSize);
+        }.bind(this)
+      }
 
     return (
       <Modal key={this.state.newKey} width="1000px" visible={this.props.operateReducer.addOnlineFilmVisible} title="增加上映影片" okText="确认添加" onCancel={this.handleCancel}
         onOk={this.handleCreate.bind(this)}>
           <Search placeholder="请出入要查询的数据" style={{ width: 200 }} onSearch={value => this.searchFilmData(value)}/>
-          <Table rowSelection={rowSelection} columns={columns} dataSource={this.state.filmData} bordered/>
+          <Table rowKey="id2" rowSelection={rowSelection} columns={columns} pagination={pagination} dataSource={this.state.filmData.rows} bordered/>
       </Modal>
     )
   }
