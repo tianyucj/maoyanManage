@@ -12,10 +12,10 @@ let dynamicData = [];
 class Updata extends React.Component{
   constructor(props){
     super(props);
-    this.state = { 
+    this.state = {
           visible: false,
           seatvisible: false ,
-        } 
+        }
   }
   componentWillReceiveProps(nextProps){
         if((!this.props.operateReducer.updateVisible && nextProps.operateReducer.updateVisible)
@@ -41,16 +41,28 @@ class Updata extends React.Component{
   }
   showSeats(k){
       let value = this.props.form.getFieldValue(`seats_${k}`);
-
+      try{
+        JSON.parse(value);
+      }catch(e){
+        if(e){
+          Modal.confirm({
+            title:'警告',
+            content:"座位格式不正确，请输入正确的格式!",
+            okText:"确认",
+            cancelText:"取消"
+          })
+          return false
+        }
+      }
       this.setState({
           seatvisible:true,
           seats:value
       });
   }
   SeathandleOk(){
-    this.setState({ 
+    this.setState({
       seatvisible: false,
-    });  
+    });
   }
   handleSubmit(e){
       e.preventDefault();
@@ -98,10 +110,10 @@ class Updata extends React.Component{
                   });
               }.bind(this)
             })
-            
+
         }
       });
-      
+
     }
   handleCancel(){
        store.dispatch({
@@ -166,7 +178,7 @@ class Updata extends React.Component{
             {...formItemLayout}
             label='放映厅名'
             required={false}
-            key={k} 
+            key={k}
           >
             {getFieldDecorator(`names_${k}`, {
               validateTrigger: ['onChange', 'onBlur'],
@@ -189,7 +201,7 @@ class Updata extends React.Component{
           <FormItem
             {... formItemLayout}
             label='座位'
-            required={false} 
+            required={false}
           >
             {getFieldDecorator(`seats_${k}`, {
               validateTrigger: ['onChange', 'onBlur'],
@@ -214,8 +226,8 @@ class Updata extends React.Component{
       return (
         <span>
               <Seat seats={this.state.seats}
-                    visible={this.state.seatvisible} 
-                    handleOk={this.SeathandleOk.bind(this)} 
+                    visible={this.state.seatvisible}
+                    handleOk={this.SeathandleOk.bind(this)}
                     >
               </Seat>
             <Modal title="修改数据" visible={this.props.operateReducer.updateVisible}
