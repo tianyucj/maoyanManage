@@ -99,7 +99,7 @@ class CinemaManage extends React.Component{
 	    		<Col span={2}>
 	    		<AddElement show={this.show.bind(this)}></AddElement>
 	    		</Col>
-				<Col span={3}>
+				<Col span={2}>
 	    		<Button type="danger" onClick={this.batchDel.bind(this)}>批量删除</Button>
 	    		</Col>
 	    		<Col span={8}>
