@@ -85,6 +85,11 @@ class CinemaManage extends React.Component{
 			    	}
 		     	}.bind(this)  
 		    });
+	    }else{
+	    	confirm({
+		        title: '提示',
+		        content: '没有选择数据', 
+		    });
 	    }
     }
     render(){
@@ -102,7 +107,7 @@ class CinemaManage extends React.Component{
 	    		</Col>
 
 	    		</Row>
-	    		<UpdataElement></UpdataElement>
+	    		<UpdataElement show={this.show.bind(this)}></UpdataElement>
 	    		<TableElement forPage={this.state.forPage} show={this.show.bind(this)}></TableElement>
 	    	</Card>
     	)
