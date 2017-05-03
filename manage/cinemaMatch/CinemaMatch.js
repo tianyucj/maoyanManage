@@ -86,9 +86,9 @@ class CinemaMatch extends React.Component{
   }
   render(){
     return (<Card title="院线匹配">
-      <Row style={{marginTop:20,marginBottom:20}}>
+      <Row style={{marginBottom:20}}>
         <Col span={3}><Button onClick={()=>this.showAddOnlineFilmModal()} type="primary" >增加上映影片</Button></Col>
-        <Col span={3}><Button onClick={()=>this.deleteContents()} type="danger" >批量删除</Button></Col>
+        <Col span={2}><Button onClick={()=>this.deleteContents()} type="danger" >批量删除</Button></Col>
         <Col span={8}><SearchOnlineFilm showFilm={this.showFilm.bind(this)}></SearchOnlineFilm></Col>
       </Row>
       <ViewChip></ViewChip>
