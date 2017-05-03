@@ -75,7 +75,7 @@ class OrderManage extends React.Component{
         for(let i = 0;i < this.props.orderManageReducer.deleteData.length;i++){
           ajax({
             type:"post",
-            url:"/filmData/del",
+            url:"/orderData/del",
             data:{_id:this.props.orderManageReducer.deleteData[i]._id},
             success:function(){
               notification['success']({
