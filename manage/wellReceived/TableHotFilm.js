@@ -1,10 +1,43 @@
 import React from "react";
-import {Button,Table,Modal} from "antd";
+import {Button,Table,Modal,notification} from "antd";
 import {ajax} from "../../tool/tools";
+import store from "../../tool/store";
+import {connect} from "react-redux";
+const confirm = Modal.confirm;
 
-export default class TableHotFilm extends React.Component{
+class TableHotFilm extends React.Component{
   constructor(props){
     super(props);
+  }
+  delete(text){
+    confirm({
+      title: '是否要删除?',
+      content: text.chName,
+      onOk:function() {
+        console.log('OK');
+        ajax({
+          type:"post",
+          url:"/hotFilmData/del",
+          data:{
+            _id:text._id
+          },
+          success:function(){
+            this.props.show();
+
+            notification['success']({
+              message: '删除提醒',
+              description: '删除已成功',
+            });
+            this.props.router.replace("/Manage");
+
+          }.bind(this)
+        })
+      }.bind(this),
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+
   }
   render(){
     const columns = [{
@@ -47,8 +80,16 @@ export default class TableHotFilm extends React.Component{
       title: '排行',
       dataIndex: 'rink',
       key: 'rink',
+    },{
+      title: '操作',
+      key: 'action',
+      render: (text, record) => (
+        <span>
+        <Button type="danger" onClick={()=>{this.delete(text)}}>删除</Button>
+        </span>
+        ),
     }];
-    const data = this.props.data;
+    const data = this.props.wellReceiveReducer.data;
     const pagination = {
       current:data.curpage,
       pageSize:data.eachpage,
@@ -62,8 +103,22 @@ export default class TableHotFilm extends React.Component{
         this.props.show(page,pageSize);
       }.bind(this)
     }
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        store.dispatch({
+          type:"DELETE_ALL_WELLRECEIVEDATA",
+          deleteData:selectedRows
+        })
+      }
+    }
     return <div >
-    <Table bordered columns={columns} pagination={pagination} dataSource={this.props.data.rows} />
+    <Table rowSelection={rowSelection} bordered columns={columns} pagination={pagination} dataSource={this.props.wellReceiveReducer.data.rows} />
     </div>
   }
 }
+const mapStateToProps = function(store){
+  return {
+    wellReceiveReducer:store.wellReceiveReducer
+  }
+}
+export default connect(mapStateToProps)(TableHotFilm);

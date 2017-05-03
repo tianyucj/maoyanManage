@@ -23,12 +23,12 @@ handleSearchChange(value){
   })
 }
 serch(){
-  if(this.state.searchValue != ""){
-    var obj = {};
+  var obj = {};
+  if(this.state.searchValue != ""){  
     obj = {[this.state.key]:this.state.searchValue};
     this.props.show(1,5,obj)
   }else{
-   this.props.show()
+   this.props.show(1,5,{})
  }
 
 }

@@ -119,14 +119,30 @@ class TableFilm extends React.Component{
         showSizeChanger:true,
         pageSizeOptions:['5','10','15'],
         onChange:function(page,pageSize){
-          this.props.show(page,pageSize,this.props.forPage);
+          if(this.props.forPage != undefined){
+            this.props.show(page,pageSize,this.props.forPage);
+          }else{
+            this.props.show(page,pageSize);
+          }
         }.bind(this),
         onShowSizeChange:function(page,pageSize){
-          this.props.show(page,pageSize,this.props.forPage);
+          if(this.props.forPage != undefined){
+            this.props.show(page,pageSize,this.props.forPage);
+          }else{
+            this.props.show(page,pageSize);
+          }
         }.bind(this)
+      };
+      const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+          store.dispatch({
+            type:"DELETE_ALL_FILMDATA",
+            deleteData:selectedRows
+          })
+        }
       }
       return <div >
-      <Table bordered columns={columns} pagination={pagination} dataSource={this.props.filmReducer.data.rows} />
+      <Table bordered rowSelection={rowSelection} columns={columns} pagination={pagination} dataSource={this.props.filmReducer.data.rows} />
 
       </div>
     }

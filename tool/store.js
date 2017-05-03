@@ -34,7 +34,8 @@ const operateReducer = function(state = wiget,action){
 // 用户管理的reducer，user用于点击修改时显示在弹窗上的数据，data用于用户管理界面展示的所有数据
 const user = {
 	user:{},
-	data:{}
+	data:{},
+	deleteData:[]
 }
 const userReducer = function(state = user,action){
 	if(action.type == "SHOW_USER"){
@@ -45,13 +46,18 @@ const userReducer = function(state = user,action){
 		var newState = Object.assign({},state,{data:action.data});
 		return newState
 	}
+	if(action.type == "DELETE_ALL_USERDATA"){
+		var newState = Object.assign({},state,{deleteData:action.deleteData});
+		return newState
+	}
 	return state
 }
 
 // 电影管理的reducer，user用于点击修改时显示在弹窗上的数据，data用于电影管理界面展示的所有数据
 const film = {
 	film:{},
-	data:{}
+	data:{},
+	deleteData:[]
 }
 const filmReducer = function(state = film,action){
 	if(action.type == "SHOW_FILM"){
@@ -60,6 +66,10 @@ const filmReducer = function(state = film,action){
 	}
 	if(action.type == "SHOW_ALL_FILM"){
 		var newState = Object.assign({},state,{data:action.data});
+		return newState
+	}
+	if(action.type == "DELETE_ALL_FILMDATA"){
+		var newState = Object.assign({},state,{deleteData:action.deleteData});
 		return newState
 	}
 	return state
@@ -101,10 +111,27 @@ const cinemaMatchReducer = function(state = cinemaMatch,action){
 	}
 	return state
 }
+//热映电影管理
+const wellReceive = {
+	data:{},
+	deleteData:[]
+}
+const wellReceiveReducer = function(state = wellReceive,action){
+	if(action.type == "SHOW_ALL_WELLRECEIVE"){
+		var newState = Object.assign({},state,{data:action.data});
+		return newState
+	}
+	if(action.type == "DELETE_ALL_WELLRECEIVEDATA"){
+		var newState = Object.assign({},state,{deleteData:action.deleteData});
+		return newState
+	}
+	return state
+}
 //订单管理
 const orderManage = {
 	orderManage:{},
-	data:{}
+	data:{},
+	deleteData:[]
 }
 const orderManageReducer = function(state = orderManage,action){
 	if(action.type == "SHOW_ORDERMANAGE"){
@@ -113,6 +140,10 @@ const orderManageReducer = function(state = orderManage,action){
 	}
 	if(action.type == "SHOW_ALL_ORDERMANAGE"){
 		var newState = Object.assign({},state,{data:action.data});
+		return newState
+	}
+	if(action.type == "DELETE_ALL_ORDERDATA"){
+		var newState = Object.assign({},state,{deleteData:action.deleteData});
 		return newState
 	}
 	return state
@@ -124,6 +155,7 @@ const reducers = combineReducers({
 	filmReducer:filmReducer,
 	cinemaReducer:cinemaReducer,
 	cinemaMatchReducer:cinemaMatchReducer,
+	wellReceiveReducer:wellReceiveReducer,
 	orderManageReducer:orderManageReducer
 });
 

@@ -1,16 +1,16 @@
 import React from "react";
-import {Row,Col,Card} from "antd";
+import {Row,Col,Card,Button,notification,Modal} from "antd";
 import {ajax} from "../../tool/tools";
+import store from "../../tool/store";
+import {connect} from "react-redux";
+const confirm = Modal.confirm;
 
 import AddHotFilm from "./AddHotFilm";
 import TableHotFilm from "./TableHotFilm";
 
-export default class WellReceived extends React.Component{
+class WellReceived extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {
-			data:{}
-		}
 	}
 	componentWillMount(){
 		this.show();
@@ -21,26 +21,73 @@ export default class WellReceived extends React.Component{
 			url:"/hotFilmData/find",
 			data:{
 				page:page,
-			    rows:pageSize
+				rows:pageSize
 			},
 			success:function(data){
-				this.setState({
+				store.dispatch({
+					type:"SHOW_ALL_WELLRECEIVE",
 					data:data
-				})
+				});
 			}.bind(this)
 		});
 	}
+	deleteData(){ 
+		console.log("11111111",this.props.wellReceiveReducer.deleteData.length)
+		if(this.props.wellReceiveReducer.deleteData.length > 0){
+			confirm({
+				title: '是否要删除?',
+				content: "是否要进行批量删除？！！",
+				onOk:function(){
+					for(let i = 0;i < this.props.wellReceiveReducer.deleteData.length;i++){
+						ajax({
+							type:"post",
+							url:"/hotFilmData/del",
+							data:{_id:this.props.wellReceiveReducer.deleteData[i]._id},
+							success:function(){     
+								notification['success']({
+									message: '删除提醒',
+									description: '删除已成功',
+								});
+								this.show();
+
+							}.bind(this)
+						})
+					}       
+				}.bind(this)
+			})
+		}else{
+			confirm({
+				title: '提醒',
+				content: "您还没有选择需要删除的内容，请选择后再进行此操作！",
+				onOk:function() {
+					console.log("ok")
+				}.bind(this),
+				onCancel:function() {
+					console.log("cancel")
+				}.bind(this)
+			})
+		}
+	}
 	render(){
 		return (<div>
-			<Card title="热映管理">
+			<Card title="热映电影管理">
 			<Row>
 			<Col span={2}>
 			<AddHotFilm show={this.show.bind(this)}></AddHotFilm>
 			</Col>
+			<Col span={2}>
+			<Button onClick={this.deleteData.bind(this)} type="danger">批量删除</Button>
+			</Col>
 			</Row>
-			<TableHotFilm data={this.state.data}></TableHotFilm>
+			<TableHotFilm show={this.show.bind(this)}></TableHotFilm>
 			</Card>
 			</div>
 			)
-		}
 	}
+}
+const mapStateToProps = function(store){
+	return {
+		wellReceiveReducer:store.wellReceiveReducer
+	}
+}
+export default connect(mapStateToProps)(WellReceived);
