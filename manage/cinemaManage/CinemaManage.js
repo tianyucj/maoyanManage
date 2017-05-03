@@ -85,6 +85,11 @@ class CinemaManage extends React.Component{
 			    	}
 		     	}.bind(this)  
 		    });
+	    }else{
+	    	confirm({
+		        title: '提示',
+		        content: '没有选择数据', 
+		    });
 	    }
     }
     render(){
@@ -94,7 +99,7 @@ class CinemaManage extends React.Component{
 	    		<Col span={2}>
 	    		<AddElement show={this.show.bind(this)}></AddElement>
 	    		</Col>
-				<Col span={3}>
+				<Col span={2}>
 	    		<Button type="danger" onClick={this.batchDel.bind(this)}>批量删除</Button>
 	    		</Col>
 	    		<Col span={8}>
@@ -102,7 +107,7 @@ class CinemaManage extends React.Component{
 	    		</Col>
 
 	    		</Row>
-	    		<UpdataElement></UpdataElement>
+	    		<UpdataElement show={this.show.bind(this)}></UpdataElement>
 	    		<TableElement forPage={this.state.forPage} show={this.show.bind(this)}></TableElement>
 	    	</Card>
     	)
