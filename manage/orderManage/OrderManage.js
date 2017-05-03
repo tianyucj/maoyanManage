@@ -8,6 +8,7 @@ const confirm = Modal.confirm;
 import MaoyanUser from "./MaoyanUser";
 import TableOrder from "./TableOrder";
 import SearchOrder from "./SearchOrder";
+import UpdateOrder from "./UpdateOrder";
 
 class OrderManage extends React.Component{
 	constructor(props){
@@ -65,7 +66,7 @@ class OrderManage extends React.Component{
       }.bind(this)
     });
   }
-  deleteData(){ 
+  deleteData(){
     if(this.props.orderManageReducer.deleteData.length > 0){
      confirm({
       title: '是否要删除?',
@@ -76,7 +77,7 @@ class OrderManage extends React.Component{
             type:"post",
             url:"/filmData/del",
             data:{_id:this.props.orderManageReducer.deleteData[i]._id},
-            success:function(){     
+            success:function(){
               notification['success']({
                 message: '删除提醒',
                 description: '删除已成功',
@@ -85,7 +86,7 @@ class OrderManage extends React.Component{
 
             }.bind(this)
           })
-        }       
+        }
       }.bind(this)
     })
    }else{
@@ -116,10 +117,12 @@ render(){
    </Col>
    </Row>
    <TableOrder forPage={this.state.forPage} show={this.show.bind(this)}></TableOrder>
+	 <UpdateOrder show={this.show.bind(this)}></UpdateOrder>
    </Card>
    </div>
    )
 }
+
 }
 const mapStateToProps = function(store){
   return {

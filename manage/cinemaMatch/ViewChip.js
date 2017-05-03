@@ -73,14 +73,6 @@ class ViewChip extends React.Component{
       type:"SHOW_UPDATECHIPARRANGEMENT_MODAL",
       updateChipArrangementVisible:true
     })
-    // 在点击修改按钮时就先将该条数据内的排片信息删除，方便在修改后重新将新的数据直接加入到排片信息中，而不用做其它复杂的操作
-    // let nowChipArrangement = text.chipArrangement;
-    // for(let i = 0 ; i < nowChipArrangement.length; i++){
-    //   if(nowChipArrangement[i].theChainName == text.theChainName && nowChipArrangement[i].voidHall == text.voidHall && nowChipArrangement[i].showTime == text.showTime ){
-    //     nowChipArrangement.splice(i,1);
-    //     return false
-    //   }
-    // }
     store.dispatch({
       type:"DELETECONTENTS_ONLINE",
       selectData:text

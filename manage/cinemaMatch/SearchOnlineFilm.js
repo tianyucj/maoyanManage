@@ -25,10 +25,9 @@ export default class SearchOnlineFilm extends React.Component {
     })
   }
   serch(){
-    let obj = {};
-    console.log("value",this.state.searchCondition);
-    obj[this.state.searchCondition] = this.state.searchContent;
-    this.props.showFilm(obj);
+    console.log("this.state.searchCondition",this.state.searchCondition);
+    console.log("this.state.searchContent",this.state.searchContent);
+    this.props.showFilm(1,5,this.state.searchCondition,this.state.searchContent);
   }
   render(){
     return (
