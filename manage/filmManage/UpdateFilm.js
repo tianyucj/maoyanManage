@@ -21,8 +21,8 @@ class UpdateFilm extends React.Component{
         this.props.show();
 
         notification['success']({
-          message: '删除提醒',
-          description: '删除已成功',
+          message: '提醒',
+          description: '修改已成功',
         });
         this.props.router.replace("/Manage");
 

@@ -50,14 +50,11 @@ export default class AddHotFilm extends React.Component{
             data:JSON.stringify(this.state.selectedRows)
           },
           success:function(){
-            this.props.show();
-
             notification['success']({
               message: '添加提醒',
               description: '添加已成功',
             });
-            this.props.router.replace("/Manage");
-
+            this.props.show();
           }.bind(this)
         });
          this.setState({
@@ -135,7 +132,7 @@ export default class AddHotFilm extends React.Component{
     }
     return <div style={{marginBottom:"20px"}}>
     <Button type="primary" onClick={this.showModal.bind(this)} ghost>添加</Button>
-    <Modal title="添加" style={{width:"1200px"}} visible={this.state.visible}
+    <Modal title="添加" width="1000px" visible={this.state.visible}
     onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}
     >
     <Table rowSelection={rowSelection} pagination={pagination} columns={columns} dataSource={this.state.data.rows} bordered/>
