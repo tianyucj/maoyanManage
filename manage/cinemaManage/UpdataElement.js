@@ -151,6 +151,23 @@ class Updata extends React.Component{
         keys: nextKeys,
       });
   }
+  checkchainName(rule, value, callback){
+      ajax({
+        type:"post",
+        url:"/theChainData/find",
+        data:{
+          findType:"exact",
+          chainName:value
+        },
+        success:function(data){
+          if(data.length>0){
+            callback("该影院已添加");
+          }else{
+            callback();
+          }
+        }.bind(this)
+      });
+    }
   render(){
       const { getFieldDecorator,getFieldValue} = this.props.form;
       const formItemLayout = {
@@ -237,7 +254,7 @@ class Updata extends React.Component{
               <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
                 <FormItem {...formItemLayout} label="院线名：" hasFeedback>
                       {getFieldDecorator('chainName', {
-                        rules: [{ required: true, message: '请输入院线名!' }],
+                        rules: [{ required: true, message: '请输入院线名!' },{ validator:this.checkchainName.bind(this) }],
                       })(
                         <Input type="text"  placeholder="院线名" />
                       )}
