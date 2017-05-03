@@ -6,7 +6,7 @@ const FormItem = Form.Item;
 class AddFilm extends React.Component{
   constructor(props){
     super(props);
-    this.state = { 
+    this.state = {
       visible: false,
       homeImgList:[],
       homeImgPath:[],
@@ -62,7 +62,7 @@ class AddFilm extends React.Component{
           message: '添加提醒',
           description: '添加已成功',
         });
-        this.props.router.replace("/Manage");  
+        this.props.router.replace("/Manage");
 
       }.bind(this)
     });
@@ -123,82 +123,82 @@ class AddFilm extends React.Component{
 
 
   return <div>
-  <Button type="primary" onClick={this.showModal.bind(this)}>添加</Button>
-  <Modal title="添加" visible={this.state.visible}
+  <Button type="primary" onClick={this.showModal.bind(this)}>增加</Button>
+  <Modal title="增加电影" visible={this.state.visible}
   onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}
   >
   <Form style={{height:"400",overflow:"scroll"}} onSubmit={this.handleSubmit.bind(this)}>
-  <FormItem {...formItemLayout} label="电影名">
+  <FormItem {...formItemLayout} label="电影名" hasFeedback>
   {getFieldDecorator('chName', {
    rules: [{ required: true, message: '请输入电影名' }],
  })(
  <Input type="text" placeholder="电影名" />
  )}
  </FormItem>
- <FormItem {...formItemLayout} label="英文名">
+ <FormItem {...formItemLayout} label="英文名" hasFeedback>
  {getFieldDecorator('enName', {
    rules: [{ required: true, message: '请输入英文名' }],
  })(
  <Input type="text" placeholder="英文名" />
  )}
  </FormItem>
- <FormItem {...formItemLayout} label="类型">
+ <FormItem {...formItemLayout} label="类型" hasFeedback>
  {getFieldDecorator('style', {
    rules: [{ required: true, message: '请输入类型' }],
  })(
  <Input type="text" placeholder="类型" />
  )}
  </FormItem>
- <FormItem {...formItemLayout} label="地区">
+ <FormItem {...formItemLayout} label="地区" hasFeedback>
  {getFieldDecorator('place', {
    rules: [{ required: true, message: '请输入地区' }],
  })(
  <Input type="text" placeholder="地区" />
  )}
  </FormItem>
- <FormItem {...formItemLayout} label="年代">
+ <FormItem {...formItemLayout} label="年代" hasFeedback>
  {getFieldDecorator('century', {
    rules: [{ required: true, message: '请输入年代' }],
  })(
  <Input type="text" placeholder="年代" />
  )}
  </FormItem>
- <FormItem {...formItemLayout} label="时长">
+ <FormItem {...formItemLayout} label="时长" hasFeedback>
  {getFieldDecorator('duration', {
    rules: [{ required: true, message: '请输入时长' }],
  })(
  <Input type="text" placeholder="时长" />
  )}
  </FormItem>
- <FormItem {...formItemLayout} label="上映时间">
+ <FormItem {...formItemLayout} label="上映时间" hasFeedback>
  {getFieldDecorator('reTime', {
    rules: [{ required: true, message: '请输入上映时间' }],
  })(
  <Input type="text" placeholder="上映时间" />
  )}
  </FormItem>
- <FormItem {...formItemLayout} label="上映地点">
+ <FormItem {...formItemLayout} label="上映地点" hasFeedback>
  {getFieldDecorator('rePlace', {
    rules: [{ required: true, message: '请输入上映地点' }],
  })(
  <Input type="text" placeholder="上映地点" />
  )}
  </FormItem>
- <FormItem {...formItemLayout} label="票房">
+ <FormItem {...formItemLayout} label="票房" hasFeedback>
  {getFieldDecorator('boxOffice', {
    rules: [{ required: true, message: '请输入票房' }],
  })(
  <Input type="text" placeholder="票房" />
  )}
  </FormItem>
- <FormItem {...formItemLayout} label="描述">
+ <FormItem {...formItemLayout} label="描述" hasFeedback>
  {getFieldDecorator('abstract', {
    rules: [{ required: true, message: '请输入描述' }],
  })(
  <Input type="text" placeholder="描述" />
  )}
  </FormItem>
- <FormItem {...formItemLayout} label="排行">
+ <FormItem {...formItemLayout} label="排行" hasFeedback>
  {getFieldDecorator('rink', {
    rules: [{ required: true, message: '请输入排行' }],
  })(

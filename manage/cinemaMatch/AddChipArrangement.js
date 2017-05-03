@@ -42,8 +42,8 @@ class AddChipArrangement extends React.Component{
                 message: '排片提示',
                 description: "排片成功，您还可以继续添加排片信息，否则请点击取消按钮退出！",
               });
-              console.log("循环内修改在线影片信息的返回信息：",data);
-            }
+              this.props.form.resetFields();
+            }.bind(this)
           });
         }else{
             chipList.push(values);
@@ -140,9 +140,8 @@ class AddChipArrangement extends React.Component{
           sm: { span: 14 },
         },
       };
-      console.log(this.state.newKey);
     return (
-      <Modal visible={this.props.operateReducer.addChipArrangementVisible} title="增加影片排片" okText="确认添加" onCancel={this.handleCancel}
+      <Modal visible={this.props.operateReducer.addChipArrangementVisible} title="增加影片排片" okText="确认添加" onCancel={this.handleCancel.bind(this)}
         onOk={this.handleCreate.bind(this)}>
         <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="影院" labelCol={{ span: 6 }}

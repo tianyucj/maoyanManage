@@ -40,7 +40,7 @@ class FilmManage extends React.Component{
           rows:pageSize,
           enName:searchData.enName
         }
-      } 
+      }
       if(searchData.place != undefined){
         obj={
           page:page,
@@ -66,18 +66,18 @@ class FilmManage extends React.Component{
       }.bind(this)
     });
   }
-  deleteData(){ 
+  deleteData(){
     if(this.props.filmReducer.deleteData.length > 0){
      confirm({
       title: '是否要删除?',
-      content: "是否要进行批量删除？！！",
+      content: "请确认是否要删除当前选中数据？",
       onOk:function(){
         for(let i = 0;i < this.props.filmReducer.deleteData.length;i++){
           ajax({
             type:"post",
             url:"/filmData/del",
             data:{_id:this.props.filmReducer.deleteData[i]._id},
-            success:function(){     
+            success:function(){
               notification['success']({
                 message: '删除提醒',
                 description: '删除已成功',
@@ -86,13 +86,13 @@ class FilmManage extends React.Component{
 
             }.bind(this)
           })
-        }       
+        }
       }.bind(this)
     })
    }else{
     confirm({
       title: '提醒',
-      content: "您还没有选择需要删除的内容，请选择后再进行此操作！",
+      content: "请先选择需要删除的数据！",
       onOk:function() {
         console.log("ok")
       }.bind(this),

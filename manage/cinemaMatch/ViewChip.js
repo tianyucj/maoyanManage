@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {Modal,Table,Button,Popconfirm} from "antd";
 import {ajax} from "../../tool/tools";
 import UpdateChip from "./UpdateChip";
+import AddChipArrangement from "./AddChipArrangement";
 
 class ViewChip extends React.Component{
   constructor(props){
@@ -130,6 +131,7 @@ class ViewChip extends React.Component{
           <Button onClick={()=>this.showChipArrangement()}>增加排片</Button>
           <Table rowSelection={rowSelection} columns={columns} dataSource={this.props.cinemaMatchReducer.cinema.chipArrangement} bordered/>
           <UpdateChip></UpdateChip>
+          <AddChipArrangement></AddChipArrangement>
       </Modal>
     )
   }

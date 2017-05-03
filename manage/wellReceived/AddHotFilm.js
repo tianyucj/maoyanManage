@@ -6,7 +6,7 @@ import {ajax} from "../../tool/tools";
 export default class AddHotFilm extends React.Component{
   constructor(props){
     super(props);
-    this.state = { 
+    this.state = {
       visible: false,
       data:{},
       selectedRows:[]
@@ -130,8 +130,8 @@ export default class AddHotFilm extends React.Component{
       }
     }
     return <div style={{marginBottom:"20px"}}>
-    <Button type="primary" onClick={this.showModal.bind(this)}>添加</Button>
-    <Modal title="添加" width="1000px" visible={this.state.visible}
+    <Button type="primary" onClick={this.showModal.bind(this)}>增加</Button>
+    <Modal title="增加热映电影" width="1000px" visible={this.state.visible}
     onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}
     >
     <Table rowSelection={rowSelection} pagination={pagination} columns={columns} dataSource={this.state.data.rows} bordered/>

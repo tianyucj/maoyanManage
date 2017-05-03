@@ -31,19 +31,19 @@ class WellReceived extends React.Component{
 			}.bind(this)
 		});
 	}
-	deleteData(){ 
+	deleteData(){
 		console.log("11111111",this.props.wellReceiveReducer.deleteData.length)
 		if(this.props.wellReceiveReducer.deleteData.length > 0){
 			confirm({
-				title: '是否要删除?',
-				content: "是否要进行批量删除？！！",
+				title: '删除提示',
+				content: "请确认是否要删除当前选中数据？",
 				onOk:function(){
 					for(let i = 0;i < this.props.wellReceiveReducer.deleteData.length;i++){
 						ajax({
 							type:"post",
 							url:"/hotFilmData/del",
 							data:{_id:this.props.wellReceiveReducer.deleteData[i]._id},
-							success:function(){     
+							success:function(){
 								notification['success']({
 									message: '删除提醒',
 									description: '删除已成功',
@@ -52,13 +52,13 @@ class WellReceived extends React.Component{
 
 							}.bind(this)
 						})
-					}       
+					}
 				}.bind(this)
 			})
 		}else{
 			confirm({
 				title: '提醒',
-				content: "您还没有选择需要删除的内容，请选择后再进行此操作！",
+				content: "请先选择需要删除的数据！",
 				onOk:function() {
 					console.log("ok")
 				}.bind(this),

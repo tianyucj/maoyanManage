@@ -2,30 +2,43 @@ import React from "react";
 import {ajax} from "../../tool/tools";
 // import 'antd/dist/antd.css';
 import Seat from "./Seat";
-import {Modal,Button,Input,Form,Icon,message} from 'antd';
+import {Modal,Button,Input,Form,Icon,message,notification} from 'antd';
 const FormItem = Form.Item;
 
 let uuid = 0;
 class AddButton extends React.Component{
   constructor(props){
     super(props);
-    this.state = { 
+    this.state = {
           visible: false ,
           seatvisible: false ,
-      } 
+      }
   }
 
   showSeats(k){
       let value = this.props.form.getFieldValue(`seats_${k}`);
+      try{
+        JSON.parse(value);
+      }catch(e){
+        if(e){
+          Modal.confirm({
+            title:'警告',
+            content:"座位格式不正确，请输入正确的格式!",
+            okText:"确认",
+            cancelText:"取消"
+          })
+          return false
+        }
+      }
       this.setState({
           seatvisible:true,
           seats:value
       });
   }
   SeathandleOk(){
-      this.setState({ 
+      this.setState({
         seatvisible: false,
-      });  
+      });
     }
 
   handleSubmit(e){
@@ -43,7 +56,7 @@ class AddButton extends React.Component{
   }
   handleOk(){
     this.props.form.validateFields((err, values) => {
-        if (!err) {           
+        if (!err) {
             let data= values;
             let voidHall=[];
             for(let i=1;i<=data.keys.length;i++){
@@ -68,7 +81,11 @@ class AddButton extends React.Component{
                   voidHall:data.voidHall,
               },
               success:function(){
-                  message.info('添加成功');
+                  uuid = 0;
+                  notification.open({
+                    message: '增加提示',
+                    description: "院线增加成功！",
+                  });
                   this.props.show();
                   this.props.form.resetFields();
                   this.setState({
@@ -78,10 +95,10 @@ class AddButton extends React.Component{
             })
         }
       });
-      
+
     }
   handleCancel(){
-      this.setState({ 
+      this.setState({
         visible: false,
       });
   }
@@ -159,7 +176,7 @@ class AddButton extends React.Component{
             {...formItemLayout}
             label='放映厅名'
             required={false}
-            key={k} 
+            key={k}
           >
             {getFieldDecorator(`names_${k}`, {
               validateTrigger: ['onChange', 'onBlur'],
@@ -182,7 +199,7 @@ class AddButton extends React.Component{
           <FormItem
             {... formItemLayout}
             label='座位'
-            required={false} 
+            required={false}
           >
             {getFieldDecorator(`seats_${k}`, {
               validateTrigger: ['onChange', 'onBlur'],
@@ -207,8 +224,8 @@ class AddButton extends React.Component{
       return (
         <span>
               <Seat seats={this.state.seats}
-                    visible={this.state.seatvisible} 
-                    handleOk={this.SeathandleOk.bind(this)} 
+                    visible={this.state.seatvisible}
+                    handleOk={this.SeathandleOk.bind(this)}
                     >
               </Seat>
             <Button type="primary"  onClick={this.showModal.bind(this)}>增加</Button>

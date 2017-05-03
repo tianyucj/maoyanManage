@@ -26,7 +26,7 @@ class CinemaManage extends React.Component{
             this.setState({
 				forPage:searchData
             })
-            	
+
             if(searchData.chainName != undefined){
                 obj={
                     page:page,
@@ -68,8 +68,8 @@ class CinemaManage extends React.Component{
 		console.log(delData);
 	    if(delData.length>0){
 	    	confirm({
-		        title: '确认删除？',
-		        content: '是否批量删除所选数据？',
+		        title: '删除提示',
+		        content: '若删除当前影院，该影院所有影厅信息也将会被删除且无法恢复，请确认是否继续删除数据？',
 		        onOk:function(){
 			    	for(let i=0;i<delData.length;i++){
 			    		ajax({
@@ -83,12 +83,12 @@ class CinemaManage extends React.Component{
 			    			}.bind(this)
 			    		})
 			    	}
-		     	}.bind(this)  
+		     	}.bind(this)
 		    });
 	    }else{
 	    	confirm({
 		        title: '提示',
-		        content: '没有选择数据', 
+		        content: '请先选择需要删除的数据！',
 		    });
 	    }
     }

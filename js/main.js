@@ -19,6 +19,7 @@ ReactDOM.render(<Provider store={store}><Router history={hashHistory}>
       <IndexRoute component={Login}></IndexRoute>
       <Route path="/login" component={Login}></Route>
       <Route path="/manage" component={Manage}>
+        <IndexRoute component={UserMessage}></IndexRoute>
         <Route path="/user" component={UserMessage}></Route>
         <Route path="/film" component={FilmManage}></Route>
         <Route path="/cinema" component={CinemaManage}></Route>

@@ -82,21 +82,21 @@ class UpdateOrder extends React.Component{
    <Input type="text" disabled/>
    )}
    </FormItem>
-   <FormItem {...formItemLayout} label="数量">
+   <FormItem {...formItemLayout} label="数量" hasFeedback>
    {getFieldDecorator('tickets', {
      rules: [{ required: true, message: '请输入影票数量' }],
    })(
    <Input type="text" placeholder="请输入影票数量" />
    )}
    </FormItem>
-   <FormItem {...formItemLayout} label="票价">
+   <FormItem {...formItemLayout} label="票价" hasFeedback>
    {getFieldDecorator('ticketPrice', {
      rules: [{ required: true, message: '请输入票价' }],
    })(
    <Input type="text" placeholder="请出入票价" />
    )}
    </FormItem>
-   <FormItem {...formItemLayout} label="座位数">
+   <FormItem {...formItemLayout} label="座位数" hasFeedback>
    {getFieldDecorator('seat', {
      rules: [{ required: true, message: '请输入座位数' }],
    })(

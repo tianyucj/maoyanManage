@@ -7,9 +7,6 @@ import {ajax} from "../../tool/tools";
 class CinemaTable extends React.Component{
   constructor(props){
     super(props);
-    this.state = {
-      keysNum:this.props.keys
-    }
   }
   delFilm(id){
     ajax({
@@ -29,9 +26,6 @@ class CinemaTable extends React.Component{
     store.dispatch({
       type:"SHOW_ADD_CINEMAMATCH",
       addChip:text
-    })
-    this.setState({
-      keysNum:this.state.keysNum++
     })
   }
   showChipArrangementModal(text){

@@ -49,7 +49,7 @@ class AddUser extends React.Component{
           message: '添加提醒',
           description: '添加已成功',
         });
-        this.props.router.replace("/Manage");  
+        this.props.router.replace("/Manage");
 
       }.bind(this)
     });
@@ -77,47 +77,47 @@ class AddUser extends React.Component{
    };
 
    return <div >
-   <Button type="primary" onClick={this.showModal.bind(this)}>添加</Button>
-   <Modal title="添加" visible={this.state.visible}
+   <Button type="primary" onClick={this.showModal.bind(this)}>增加</Button>
+   <Modal title="增加用户" visible={this.state.visible}
    onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}
    >
    <Form onSubmit={this.handleSubmit}>
-  <FormItem {...formItemLayout} label="姓名">
+  <FormItem {...formItemLayout} label="姓名" hasFeedback>
    {getFieldDecorator('name', {
      rules: [{ required: true, message: '请输入姓名' }],
    })(
    <Input placeholder="姓名" />
    )}
    </FormItem>
-   <FormItem {...formItemLayout} label="帐号">
+   <FormItem {...formItemLayout} label="帐号" hasFeedback>
    {getFieldDecorator('acc', {
      rules: [{ required: true, message: '请输入帐号' }],
    })(
    <Input type="text" placeholder="帐号" />
    )}
    </FormItem>
-   <FormItem {...formItemLayout} label="部门">
+   <FormItem {...formItemLayout} label="部门" hasFeedback>
    {getFieldDecorator('division', {
      rules: [{ required: true, message: '请输入部门' }],
    })(
    <Input type="text" placeholder="部门" />
    )}
    </FormItem>
-   <FormItem {...formItemLayout} label="职位">
+   <FormItem {...formItemLayout} label="职位" hasFeedback>
    {getFieldDecorator('position', {
      rules: [{ required: true, message: '请输入职位' }],
    })(
    <Input type="text" placeholder="职位" />
    )}
    </FormItem>
-   <FormItem {...formItemLayout} label="电话">
+   <FormItem {...formItemLayout} label="电话" hasFeedback>
    {getFieldDecorator('phone', {
      rules: [{ required: true, message: '请输入电话' }],
    })(
    <Input type="text" placeholder="电话" />
    )}
    </FormItem>
-   <FormItem {...formItemLayout} label="密码">
+   <FormItem {...formItemLayout} label="密码" hasFeedback>
    {getFieldDecorator('pwd', {
      rules: [{ required: true, message: '请输入密码' }],
    })(
