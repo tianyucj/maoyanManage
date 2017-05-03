@@ -137,7 +137,7 @@ class AddFilm extends React.Component{
  </FormItem>
  <FormItem {...formItemLayout} label="英文名" hasFeedback>
  {getFieldDecorator('enName', {
-   rules: [{ required: true, message: '请输入英文名' }],
+   rules: [{ required: true,message: '请输入英文名' }],
  })(
  <Input type="text" placeholder="英文名" />
  )}
@@ -208,7 +208,7 @@ class AddFilm extends React.Component{
  <FormItem
  {...formItemLayout}
  label="主页图片"
- >
+  hasFeedback>
 <Upload {...homeImgprops}>
 <Button>
 <Icon type="upload" /> 添加
@@ -218,7 +218,7 @@ class AddFilm extends React.Component{
 <FormItem
 {...formItemLayout}
 label="图集"
->
+ hasFeedback>
 <Upload {...imagesprops}>
 <Button>
 <Icon type="upload" /> 添加

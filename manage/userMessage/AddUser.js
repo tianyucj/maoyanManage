@@ -28,6 +28,23 @@ class AddUser extends React.Component{
       visible: true,
     });
   }
+  checkName(rule, value, callback){
+    ajax({
+        type:"post",
+        url:"/userLogData/find",
+        data:{
+          findType:"exact",
+          name:value
+        },
+        success:function(data){
+          if(data.length>0){
+            callback("该用户管理已添加");
+          }else{
+            callback();
+          }
+        }.bind(this)
+      });
+  }
   handleOk(e){
     var values = this.props.form.getFieldsValue();
     ajax({
@@ -84,7 +101,8 @@ class AddUser extends React.Component{
    <Form onSubmit={this.handleSubmit}>
   <FormItem {...formItemLayout} label="姓名" hasFeedback>
    {getFieldDecorator('name', {
-     rules: [{ required: true, message: '请输入姓名' }],
+     rules: [{ required: true, message: '请输入姓名' },
+     { validator:this.checkName.bind(this) }],
    })(
    <Input placeholder="姓名" />
    )}
