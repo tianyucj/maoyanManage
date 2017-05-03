@@ -37,10 +37,10 @@ class TableElement extends React.Component{
           }.bind(this)
       });
       }.bind(this)
-      
-      }); 
+
+      });
   }
-  render(){   
+  render(){
     const columns = [{
       title: '院线名',
       dataIndex: 'chainName',
@@ -92,19 +92,24 @@ class TableElement extends React.Component{
       }.bind(this),
     };
     const rowSelection = {
+      selectedRowKeys:this.props.operateReducer.selectRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         store.dispatch({
             type:"SHOW_BATCHDEL_CINEMA",
             batchDel:selectedRows
         });
+        store.dispatch({
+          type:"SELECTROWKEYS_ONLINE",
+          selectRowKeys:selectedRowKeys
+        })
       },
     };
     return (
         <div>
-            <Table  rowSelection={rowSelection} 
-                    pagination={pagination} 
-                    dataSource={this.props.cinemaReducer.data.rows} 
+            <Table  rowSelection={rowSelection}
+                    pagination={pagination}
+                    dataSource={this.props.cinemaReducer.data.rows}
                     columns={columns} bordered />
         </div>
       )
@@ -114,7 +119,7 @@ class TableElement extends React.Component{
 const mapStateToProps = function(store){
     return {
         cinemaReducer:store.cinemaReducer,
-        operateReducer:store.operateReducer,  
+        operateReducer:store.operateReducer,
     }
 }
 export default connect(mapStateToProps)(TableElement);

@@ -80,6 +80,10 @@ class CinemaManage extends React.Component{
 			    			},
 			    			success:function(){
 			    				this.show();
+	                store.dispatch({
+	                  type:"SELECTROWKEYS_ONLINE",
+	                  selectRowKeys:[]
+	                })
 			    			}.bind(this)
 			    		})
 			    	}

@@ -67,6 +67,10 @@ class CinemaMatch extends React.Component{
                   type:"DELETECONTENTS_ONLINE",
                   selectData:[]
                 });
+                store.dispatch({
+                  type:"SELECTROWKEYS_ONLINE",
+                  selectRowKeys:[]
+                })
               }.bind(this)
             });
           }

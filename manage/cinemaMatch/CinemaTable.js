@@ -85,6 +85,7 @@ class CinemaTable extends React.Component{
       ),
     }];
     const rowSelection = {
+      selectedRowKeys:this.props.operateReducer.selectRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         // 批量删除时获取的数据
@@ -92,16 +93,11 @@ class CinemaTable extends React.Component{
           type:"DELETECONTENTS_ONLINE",
           selectData:selectedRows
         });
-      },
-      onSelect: (record, selected, selectedRows) => {
-        console.log(record, selected, selectedRows);
-      },
-      onSelectAll: (selected, selectedRows, changeRows) => {
-        console.log(selected, selectedRows, changeRows);
-      },
-      getCheckboxProps: record => ({
-        disabled: record.name === 'Disabled User',    // Column configuration not to be checked
-      }),
+        store.dispatch({
+          type:"SELECTROWKEYS_ONLINE",
+          selectRowKeys:selectedRowKeys
+        })
+      }
     };
     let data = this.props.cinemaMatchReducer.data;
     const pagination = {
@@ -125,7 +121,8 @@ class CinemaTable extends React.Component{
 
 const mapStateToProps = function(store){
   return {
-    cinemaMatchReducer:store.cinemaMatchReducer
+    cinemaMatchReducer:store.cinemaMatchReducer,
+    operateReducer:store.operateReducer
   }
 }
 export default connect(mapStateToProps)(CinemaTable);

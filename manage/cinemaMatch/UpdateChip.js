@@ -123,7 +123,7 @@ class UpdateChip extends React.Component{
         onOk={this.handleCreate.bind(this)}>
         <Form>
         <FormItem {...formItemLayout} label="影院" labelCol={{ span: 6 }}
-        wrapperCol={{ span: 12 }}>
+        wrapperCol={{ span: 12 }} hasFeedback>
           {getFieldDecorator('theChainName', {
             rules: [{ required: true }],
           })(
@@ -133,7 +133,7 @@ class UpdateChip extends React.Component{
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="影厅" labelCol={{ span: 6 }}
-        wrapperCol={{ span: 12 }}>
+        wrapperCol={{ span: 12 }} hasFeedback>
           {getFieldDecorator('voidHall', {
             rules: [{ required: true }],
           })(
@@ -143,7 +143,7 @@ class UpdateChip extends React.Component{
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="放映时间：" labelCol={{ span: 6 }}
-        wrapperCol={{ span: 12 }}>
+        wrapperCol={{ span: 12 }} hasFeedback>
           {getFieldDecorator('showTime', {
             rules: [{ required: true }],
           })(
@@ -151,7 +151,7 @@ class UpdateChip extends React.Component{
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="票价" labelCol={{ span: 6 }}
-        wrapperCol={{ span: 12 }}>
+        wrapperCol={{ span: 12 }} hasFeedback>
           {getFieldDecorator('ticketPrice', {
             rules: [{ required: true }],
           })(<Input placeholder="请输入票价" />

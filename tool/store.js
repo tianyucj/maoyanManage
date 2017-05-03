@@ -5,7 +5,8 @@ const wiget = {
 	addOnlineFilmVisible:false,//院线匹配增加在线影片的弹窗
 	addChipArrangementVisible:false,//院线匹配增加排片情况的弹窗
 	showChipArrangementVisible:false,//院线匹配查看排片情况的弹窗
-	updateChipArrangementVisible:false//院线匹配修改排片情况的弹窗
+	updateChipArrangementVisible:false,//院线匹配修改排片情况的弹窗,
+	selectRowKeys:[]
 }
 const operateReducer = function(state = wiget,action){
 	if(action.type == "SHOW_UPDATE_MODAL"){
@@ -26,6 +27,10 @@ const operateReducer = function(state = wiget,action){
 	}
 	if(action.type == "SHOW_UPDATECHIPARRANGEMENT_MODAL"){
 		var newState = Object.assign({},state,{updateChipArrangementVisible:action.updateChipArrangementVisible});
+		return newState
+	}
+	if(action.type == "SELECTROWKEYS_ONLINE"){
+		var newState = Object.assign({},state,{selectRowKeys:action.selectRowKeys});
 		return newState
 	}
 	return state
