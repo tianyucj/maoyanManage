@@ -18,6 +18,7 @@ class Updata extends React.Component{
         }
   }
   componentWillReceiveProps(nextProps){
+        uuid = 0;
         if((!this.props.operateReducer.updateVisible && nextProps.operateReducer.updateVisible)
         ||(this.state.seatvisible && !nextProps.state.seatvisible)){
 
@@ -33,7 +34,6 @@ class Updata extends React.Component{
                 dynamicData[`seats_${uuid}`] = item.seat;
                 return uuid;
             });
-
             dynamicData.keys = keys;
             nextProps.form.setFieldsValue(dynamicData);
         }
@@ -101,7 +101,7 @@ class Updata extends React.Component{
                   voidHall:upData.voidHall,
               },
               success:function(){
-                uuid = 0;
+                  uuid = 0;
                   message.info('修改成功');
                   this.props.show();
                   store.dispatch({
@@ -120,6 +120,7 @@ class Updata extends React.Component{
             type:"SHOW_UPDATE_MODAL",
             updateVisible:false
       });
+      uuid = 0;
   }
   handleChange(value) {
       console.log(`selected ${value}`);
@@ -151,23 +152,6 @@ class Updata extends React.Component{
         keys: nextKeys,
       });
   }
-  checkchainName(rule, value, callback){
-      ajax({
-        type:"post",
-        url:"/theChainData/find",
-        data:{
-          findType:"exact",
-          chainName:value
-        },
-        success:function(data){
-          if(data.length>0){
-            callback("该影院已添加");
-          }else{
-            callback();
-          }
-        }.bind(this)
-      });
-    }
   render(){
       const { getFieldDecorator,getFieldValue} = this.props.form;
       const formItemLayout = {
@@ -254,9 +238,9 @@ class Updata extends React.Component{
               <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
                 <FormItem {...formItemLayout} label="院线名：" hasFeedback>
                       {getFieldDecorator('chainName', {
-                        rules: [{ required: true, message: '请输入院线名!' },{ validator:this.checkchainName.bind(this) }],
+                        rules: [{ required: true, message: '请输入院线名!' }],
                       })(
-                        <Input type="text"  placeholder="院线名" />
+                        <Input type="text" disabled />
                       )}
               </FormItem>
               <FormItem {...formItemLayout} label="地址：" hasFeedback>
