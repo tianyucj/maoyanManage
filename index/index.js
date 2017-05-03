@@ -32,7 +32,6 @@ export default class Index extends React.Component{
           })
 
         }
-        console.log("data",data)
       }.bind(this)
     })
   }

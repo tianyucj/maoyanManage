@@ -27,7 +27,6 @@ export default class AddHotFilm extends React.Component{
         this.setState({
           data:data
         })
-        console.log("this",this.state.data.curpage)
       }.bind(this)
     })
   }
@@ -131,7 +130,7 @@ export default class AddHotFilm extends React.Component{
       }
     }
     return <div style={{marginBottom:"20px"}}>
-    <Button type="primary" onClick={this.showModal.bind(this)} ghost>添加</Button>
+    <Button type="primary" onClick={this.showModal.bind(this)}>添加</Button>
     <Modal title="添加" width="1000px" visible={this.state.visible}
     onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}
     >
