@@ -58,6 +58,7 @@ class AddChipArrangement extends React.Component{
                   message: '排片提示',
                   description: "排片成功，您还可以继续添加排片信息，否则请点击取消按钮退出！",
                 });
+                this.props.form.resetFields();
                 console.log("循环外修改在线影片信息的返回信息：",data);
               }.bind(this)
             });

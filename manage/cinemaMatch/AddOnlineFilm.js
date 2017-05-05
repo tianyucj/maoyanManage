@@ -24,9 +24,10 @@ class AddOnlineFilm extends React.Component{
   }
   handleCreate(){
     var selectData = this.state.selectData;
+    console.log("添加在先影片选中的影片数据：",selectData);
     // 循环遍历的将选中的数据加入到在线影片集合中，在此先判断是否存在以及加入过的数据，如果有则不再次增加
     for(let i = 0;i < selectData.length; i++){
-      delete selectData[i]._id;
+      selectData[i].filmId = selectData[i]._id;
       ajax({
         type:"post",
         url:"/onlineFilmData/find",
