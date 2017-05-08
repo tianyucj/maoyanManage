@@ -18,7 +18,7 @@ class Updata extends React.Component{
         }
   }
   componentWillReceiveProps(nextProps){
-        uuid = 0;
+        // uuid = 0;
         if((!this.props.operateReducer.updateVisible && nextProps.operateReducer.updateVisible)
         ||(this.state.seatvisible && !nextProps.state.seatvisible)){
 
@@ -149,6 +149,7 @@ class Updata extends React.Component{
       // can use data-binding to get
       const keys = form.getFieldValue('keys');
       const nextKeys = keys.concat(uuid);
+      console.log("uuid",uuid);
       // can use data-binding to set
       // important! notify form to detect changes
       form.setFieldsValue({
