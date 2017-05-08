@@ -9,7 +9,8 @@ export default class AddHotFilm extends React.Component{
     this.state = {
       visible: false,
       data:{},
-      selectedRows:[]
+      selectedRows:[],
+      selectRowKeys:[]
     }
   }
   componentWillMount(){
@@ -53,6 +54,9 @@ export default class AddHotFilm extends React.Component{
               message: '添加提醒',
               description: '添加已成功',
             });
+            this.setState({
+              selectRowKeys:[]
+            })
             this.props.show();
           }.bind(this)
         });
@@ -107,7 +111,7 @@ export default class AddHotFilm extends React.Component{
       dataIndex: 'boxOffice',
       key: 'boxOffice',
     },{
-      title: '排行',
+      title: '评分',
       dataIndex: 'rink',
       key: 'rink',
     }];
@@ -125,8 +129,12 @@ export default class AddHotFilm extends React.Component{
       }.bind(this)
     }
     const rowSelection = {
+      selectedRowKeys:this.state.selectRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
         this.state.selectedRows = selectedRows;
+        this.setState({
+          selectRowKeys:selectedRowKeys
+        })
       }
     }
     return <div style={{marginBottom:"20px"}}>

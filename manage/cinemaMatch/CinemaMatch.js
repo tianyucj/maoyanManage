@@ -95,8 +95,8 @@ class CinemaMatch extends React.Component{
         <Col span={2}><Button onClick={()=>this.deleteContents()} type="danger" >批量删除</Button></Col>
         <Col span={8}><SearchOnlineFilm showFilm={this.showFilm.bind(this)}></SearchOnlineFilm></Col>
       </Row>
-      <ViewChip></ViewChip>
-      <AddChipArrangement></AddChipArrangement>
+      <ViewChip showFilm={this.showFilm.bind(this)}></ViewChip>
+      <AddChipArrangement showFilm={this.showFilm.bind(this)}></AddChipArrangement>
       <AddOnlineFilm showFilm={this.showFilm.bind(this)}></AddOnlineFilm>
       <CinemaTable keys={this.state.keys} searchCondition={this.state.searchCondition} searchContent={this.state.searchContent} showFilm={this.showFilm.bind(this)}></CinemaTable>
     </Card>

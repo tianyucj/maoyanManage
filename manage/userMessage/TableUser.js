@@ -107,7 +107,7 @@ class TableUser extends React.Component{
             this.props.show(page,pageSize,this.props.forPage);
           }else{
             this.props.show(page,pageSize);
-          }    
+          }
         }.bind(this),
         onShowSizeChange:function(page,pageSize){
           if(this.props.forPage != undefined){
@@ -118,10 +118,15 @@ class TableUser extends React.Component{
         }.bind(this)
       };
       const rowSelection = {
+        selectedRowKeys:this.props.operateReducer.selectRowKeys,
         onChange: (selectedRowKeys, selectedRows) => {
           store.dispatch({
             type:"DELETE_ALL_USERDATA",
             deleteData:selectedRows
+          })
+          store.dispatch({
+            type:"SELECTROWKEYS_ONLINE",
+            selectRowKeys:selectedRowKeys
           })
         }
       }
@@ -134,7 +139,8 @@ class TableUser extends React.Component{
   const mapStateToProps = function(store){
     return {
       wigetReducer:store.wigetReducer,
-      userReducer:store.userReducer
+      userReducer:store.userReducer,
+      operateReducer:store.operateReducer,
     }
   }
   export default connect(mapStateToProps)(TableUser);

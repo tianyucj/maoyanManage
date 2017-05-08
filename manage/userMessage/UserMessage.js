@@ -78,11 +78,11 @@ class UserMessage extends React.Component{
             url:"/userLogData/del",
             data:{_id:this.props.userReducer.deleteData[i]._id},
             success:function(){
-              notification['success']({
-                message: '删除提醒',
-                description: '删除已成功',
-              });
               this.show();
+							store.dispatch({
+								type:"SELECTROWKEYS_ONLINE",
+								selectRowKeys:[]
+							})
             }.bind(this)
           })
         }

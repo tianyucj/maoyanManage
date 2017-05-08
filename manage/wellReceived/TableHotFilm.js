@@ -77,7 +77,7 @@ class TableHotFilm extends React.Component{
       dataIndex: 'boxOffice',
       key: 'boxOffice',
     },{
-      title: '排行',
+      title: '评分',
       dataIndex: 'rink',
       key: 'rink',
     },{
@@ -104,10 +104,15 @@ class TableHotFilm extends React.Component{
       }.bind(this)
     }
     const rowSelection = {
+      selectedRowKeys:this.props.operateReducer.selectRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
         store.dispatch({
           type:"DELETE_ALL_WELLRECEIVEDATA",
           deleteData:selectedRows
+        })
+        store.dispatch({
+          type:"SELECTROWKEYS_ONLINE",
+          selectRowKeys:selectedRowKeys
         })
       }
     }
@@ -118,7 +123,8 @@ class TableHotFilm extends React.Component{
 }
 const mapStateToProps = function(store){
   return {
-    wellReceiveReducer:store.wellReceiveReducer
+    wellReceiveReducer:store.wellReceiveReducer,
+    operateReducer:store.operateReducer,
   }
 }
 export default connect(mapStateToProps)(TableHotFilm);

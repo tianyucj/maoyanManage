@@ -97,7 +97,7 @@ class TableFilm extends React.Component{
       dataIndex: 'boxOffice',
       key: 'boxOffice',
     },{
-      title: '排行',
+      title: '评分',
       dataIndex: 'rink',
       key: 'rink',
     },{
@@ -134,10 +134,15 @@ class TableFilm extends React.Component{
         }.bind(this)
       };
       const rowSelection = {
+        selectedRowKeys:this.props.operateReducer.selectRowKeys,
         onChange: (selectedRowKeys, selectedRows) => {
           store.dispatch({
             type:"DELETE_ALL_FILMDATA",
             deleteData:selectedRows
+          })
+          store.dispatch({
+            type:"SELECTROWKEYS_ONLINE",
+            selectRowKeys:selectedRowKeys
           })
         }
       }
@@ -150,7 +155,8 @@ class TableFilm extends React.Component{
   const mapStateToProps = function(store){
     return {
       wigetReducer:store.wigetReducer,
-      filmReducer:store.filmReducer
+      filmReducer:store.filmReducer,
+      operateReducer:store.operateReducer,
     }
   }
   export default connect(mapStateToProps)(TableFilm);

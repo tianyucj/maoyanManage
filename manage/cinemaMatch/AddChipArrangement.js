@@ -42,6 +42,9 @@ class AddChipArrangement extends React.Component{
                 message: '排片提示',
                 description: "排片成功，您还可以继续添加排片信息，否则请点击取消按钮退出！",
               });
+              // 利用对表格的刷新，解决如果一个电影无排片信息，第一次增加完排片的时候马上查看排片信息不会显示出来的问题
+              this.props.showFilm();
+              // 重置form表单
               this.props.form.resetFields();
             }.bind(this)
           });
@@ -58,6 +61,9 @@ class AddChipArrangement extends React.Component{
                   message: '排片提示',
                   description: "排片成功，您还可以继续添加排片信息，否则请点击取消按钮退出！",
                 });
+                // 利用对表格的刷新，解决如果一个电影无排片信息，第一次增加完排片的时候马上查看排片信息不会显示出来的问题
+                this.props.showFilm();
+
                 this.props.form.resetFields();
                 console.log("循环外修改在线影片信息的返回信息：",data);
               }.bind(this)

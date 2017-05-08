@@ -50,14 +50,13 @@ class AddFilm extends React.Component{
         rePlace:values.rePlace,
         boxOffice:values.boxOffice,
         abstract:values.abstract,
-        rink:parseInt(values.rink),
+        rink:values.rink,
         homeImg:JSON.stringify(this.state.homeImgPath),
         images:JSON.stringify(this.state.imagesPath)
       },
       success:function(){
         this.props.show();
         this.props.form.resetFields();
-
         notification['success']({
           message: '添加提醒',
           description: '添加已成功',
@@ -198,11 +197,11 @@ class AddFilm extends React.Component{
  <Input type="text" placeholder="描述" />
  )}
  </FormItem>
- <FormItem {...formItemLayout} label="排行" hasFeedback>
+ <FormItem {...formItemLayout} label="评分" hasFeedback>
  {getFieldDecorator('rink', {
-   rules: [{ required: true, message: '请输入排行' }],
+   rules: [{ required: true, message: '请输入评分' }],
  })(
- <Input type="text" placeholder="排行" />
+ <Input type="text" placeholder="评分" />
  )}
  </FormItem>
  <FormItem

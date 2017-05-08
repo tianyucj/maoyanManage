@@ -131,7 +131,7 @@ class ViewChip extends React.Component{
           <Button onClick={()=>this.showChipArrangement()}>增加排片</Button>
           <Table rowSelection={rowSelection} columns={columns} dataSource={this.props.cinemaMatchReducer.cinema.chipArrangement} bordered/>
           <UpdateChip></UpdateChip>
-          <AddChipArrangement></AddChipArrangement>
+          <AddChipArrangement showFilm={this.props.showFilm.bind(this)}></AddChipArrangement>
       </Modal>
     )
   }

@@ -13,7 +13,8 @@ class AddOnlineFilm extends React.Component{
       filterDropdownVisible: false,
       filtered: false,
       selectData:[],
-      newKey:0
+      newKey:0,
+      selectRowKeys:[]
     }
   }
   handleCancel(){
@@ -49,6 +50,9 @@ class AddOnlineFilm extends React.Component{
               description: selectData[i].chName+"添加失败，请不要重复添加数据！",
             });
           }
+          this.setState({
+            selectRowKeys:[]
+          })
         }.bind(this)
       });
     }
@@ -119,10 +123,12 @@ class AddOnlineFilm extends React.Component{
         key: 'boxOffice',
       }];
       const rowSelection = {
+        selectedRowKeys:this.state.selectRowKeys,
         onChange: (selectedRowKeys, selectedRows) => {
           console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
           this.setState({
-            selectData:selectedRows
+            selectData:selectedRows,
+            selectRowKeys:selectedRowKeys
           });
         },
         onSelect: (record, selected, selectedRows) => {

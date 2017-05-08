@@ -118,10 +118,15 @@ class TableOrder extends React.Component{
         }.bind(this)
       }
       const rowSelection = {
+        selectedRowKeys:this.props.operateReducer.selectRowKeys,
         onChange: (selectedRowKeys, selectedRows) => {
           store.dispatch({
             type:"DELETE_ALL_ORDERDATA",
             deleteData:selectedRows
+          })
+          store.dispatch({
+            type:"SELECTROWKEYS_ONLINE",
+            selectRowKeys:selectedRowKeys
           })
         }
       }
